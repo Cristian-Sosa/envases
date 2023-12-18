@@ -1,0 +1,21 @@
+<nav class="navbar" [ngClass]="{ navbar: true, show: showHamburgerMenu }">
+  <h1 class="navbar_title">Dino Envases</h1>
+  <div
+    *ngIf="showHamburgerMenu"
+    [ngClass]="{ menu: true, active: showMenu }"
+    (click)="menuHandle()"
+  >
+    <span class="menu_line"></span>
+    <span class="menu_line"></span>
+    <span class="menu_line"></span>
+  </div>
+</nav>
+
+<div *ngIf="showHamburgerMenu" [ngClass]="{ options: true, active: showMenu }">
+  <ul [ngClass]="{ options_list: true, active: showMenu }">
+    <li><a routerLink="">Anular carga</a></li>
+    <li><a routerLink="">Reimprimir vale</a></li>
+    <li><a routerLink="">Imprimir movimientos</a></li>
+    <li><a routerLink="auth" (click)="menuHandle()">Cerrar sesión</a></li>
+  </ul>
+</div>

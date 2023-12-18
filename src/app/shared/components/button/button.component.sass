@@ -1,0 +1,39 @@
+button
+  width: 100%
+  height: 100%
+
+  padding: 12px 32px
+
+  font-size: 16px
+
+  border: none
+  border-radius: 4px
+  outline: none
+
+  transition: background-color .2s ease
+
+  &.primary
+    background-color: #295435
+    color: #FEFEFE
+    &:hover
+      background-color: lighten(#295435, 4)
+      cursor: pointer
+    &:active
+      background-color: #295435
+      cursor: pointer
+    &:disabled
+      background-color: lighten(desaturate(#295435, 28), 16)
+      cursor: auto
+
+  &.secondary
+    background-color: #FCDED9
+    color: #F05A41
+    &:hover
+      background-color: lighten(#FCDED9, 4)
+      cursor: pointer
+    &:active
+      background-color: #FCDED9
+      cursor: pointer
+    &:disabled
+      background-color: lighten(desaturate(#FCDED9, 28), 16)
+      cursor: auto

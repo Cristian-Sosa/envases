@@ -1,1 +1,105 @@
-/* You can add global styles to this file, and also import other style files */
+@font-face
+  font-family: 'Ebony'
+  src: url('assets/fonts/Ebony-Light.woff') format('woff')
+  font-style: normal
+  font-weight: 300
+
+@font-face
+  font-family: 'Ebony'
+  src: url('assets/fonts/Ebony-Regular.woff') format('woff')
+  font-style: normal
+  font-weight: 400
+
+@font-face
+  font-family: 'Ebony'
+  src: url('assets/fonts/Ebony-Semibold.woff') format('woff')
+  font-style: normal
+  font-weight: 500
+
+@font-face
+  font-family: 'Ebony'
+  src: url('assets/fonts/Ebony-Bold.woff') format('woff')
+  font-style: normal
+  font-weight: 600
+
+*
+  margin: 0
+  padding: 0
+  box-sizing: border-box
+  user-select: none
+
+body, html
+  width: 100vw
+  height: 100vh
+
+  background-color: #FEFEFE
+
+  overflow: hidden
+
+a, p, span, h1, h2, h3, h4, h5, h6, pre, label, input, div
+  font-family: 'Ebony'
+  text-decoration: none
+  white-space: break-spaces
+  line-height: 1.4
+
+app-auth, app-main
+  width: min(100vw, 560px)
+  height: calc(100vh - 56px)
+
+  margin: 0 auto
+  padding: 32px 24px 16px
+
+  display: flex
+  flex-direction: column
+  justify-content: space-between
+  align-items: stretch
+  overflow-y: auto
+
+app-input, app-select
+  width: 100%
+
+app-toast
+  width: min(calc(100vw - 48px), calc(400px - 48px))
+
+  background-color: #C34747
+
+  border-radius: 4px
+
+  position: absolute
+  top: 0
+  left: 50%
+
+  animation-name: fadeInDown-mobile
+  animation-duration: 2s
+  animation-fill-mode: forwards
+
+  box-shadow: 0px 8px 24px -6px rgba(73, 11, 11, 0.5)
+
+  opacity: 0
+
+  z-index: 95
+
+app-tipo-envase-modal, app-cantidad-envase-modal
+  width: 100vw
+  height: 100vh
+
+  padding-top: 24px
+
+  background-color: rgb(37, 57, 77, .8)
+
+  display: flex
+  justify-content: center
+  align-items: flex-start
+
+  position: absolute
+  top: 0
+  left: 0
+
+@keyframes fadeInDown-mobile
+  0%, 32%
+    opacity: 0
+    transform: translate3d(-50%, 20%, 0)
+
+  64%, 100%
+    opacity: 1
+    transform: translate3d(-50%, 100%, 0)

@@ -1,0 +1,43 @@
+.menu
+    width: 32px
+    height: 32px
+
+    position: relative
+
+    cursor: pointer
+    transition: transform .2s ease-in .3s
+
+    .menu_line
+        width: 30px
+        height: 3px
+
+        background-color: #24492E
+
+        position: absolute
+
+        top: 50%
+        left: 50%
+
+        transform: translate3d(-50%, -50%, 0)
+        transition: transform .5s ease .3s, width .3s ease
+
+        &:nth-child(1)
+            transform: translate3d(-50%, -10px, 0)
+
+        &:nth-child(3)
+            transform: translate3d(-50%, 7px, 0)
+
+    &.active
+        transform: rotate(90deg)
+
+        .menu_line
+            width: 18px
+
+            &:nth-child(2)
+                width: 0
+
+            &:nth-child(1)
+                transform: translate3d(-50%, -50%, 0) rotate(45deg)
+
+            &:nth-child(3)
+                transform: translate3d(-50%, -50%, 0) rotate(-45deg)

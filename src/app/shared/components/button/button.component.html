@@ -1,0 +1,11 @@
+<button
+  [type]="content.type"
+  [ngClass]="{
+    button: true,
+    primary: content.isPrimary,
+    secondary: !content.isPrimary
+  }"
+  [disabled]="content.isDisabled"
+>
+  {{ content.text }}
+</button>

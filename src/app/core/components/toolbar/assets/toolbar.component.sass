@@ -1,0 +1,83 @@
+.navbar
+    width: 100%
+    height: 56px
+
+    padding: 0 24px
+
+    display: flex
+    justify-content: center
+    align-items: center
+
+    background-color: #F0DA50
+
+    overflow: hidden
+
+    .navbar_title
+        font-size: 24px
+
+    &.show
+        justify-content: space-between
+
+.options
+    width: 100vw
+    height: calc(100vh - 56px)
+
+    background-color: transparent
+    background-color: rgb(37, 57, 77, .8)
+
+    display: flex
+
+    position: absolute
+
+    opacity: 0
+
+    transition: opacity .2s ease-out
+
+    z-index: -20
+
+    &.active
+        opacity: 1
+
+        z-index: 80
+
+    .options_list
+        width: min(80%, 360px)
+        height: calc(100vh - 56px)
+
+        background-color: #3F3F3F
+
+        list-style: none
+
+        position: absolute
+        top: 0
+        right: 0
+        bottom: 0
+        left: 0
+
+        transform: translateX(-100%)
+
+        transition: transform .4s ease .15s
+
+        li a
+            padding: 16px 24px
+
+            color: #FEFEFE
+
+            display: block
+
+            transition: background-color .25s ease
+
+            &:hover
+                background-color: lighten(#3F3F3F, 8)
+                cursor: pointer
+
+        li:nth-last-child(1) a
+            background-color: #464242
+            color: #B34F4F
+
+            &:hover
+                background-color: lighten(#464242, 4)
+                cursor: pointer
+
+        &.active
+            transform: translateX(0)
