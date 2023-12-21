@@ -1,0 +1,11 @@
+<div *ngFor="let option of optionData.options">
+  <input
+    [id]="option.id"
+    type="radio"
+    [name]="option.name"
+    [value]="option.id"
+    [(ngModel)]="selectedEnvase"
+    (ngModelChange)="selected(option.id)"
+  />
+  <label [for]="option.id"> {{ option.title }} </label>
+</div>

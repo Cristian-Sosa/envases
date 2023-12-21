@@ -26,5 +26,17 @@
         ]
       }
     }
+  ],
+  "dataGroups": [
+    {
+      "name": "DinoEnvases",
+      "urls": [],
+      "cacheConfig": {
+        "strategy": "performance",
+        "maxSize": 10,
+        "maxAge": "1d",
+        "timeout": "5s"
+      }
+    }
   ]
 }

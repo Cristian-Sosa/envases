@@ -6,4 +6,8 @@ export const routes: Routes = [
     path: 'inicio-sesion',
     loadComponent: () => import('./index').then((m) => m.AuthComponent),
   },
+  {
+    path: 'carga',
+    loadComponent: () => import('./index').then((m) => m.CargaComponent),
+  },
 ];

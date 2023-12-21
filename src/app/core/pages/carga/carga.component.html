@@ -1,0 +1,36 @@
+<main class="main">
+  <header class="header"><h2 class="title">Carga actual:</h2></header>
+
+  <section class="content">
+    <!-- <app-lista-envases></app-lista-envases> -->
+  </section>
+
+  <footer class="actions">
+    <app-button
+      [content]="{
+          type: 'sumbit',
+          text: 'Imprimir carga',
+          isPrimary: true,
+          isDisabled: false,
+        }"
+      (click)="printCarga()"
+    ></app-button>
+    <button (click)="newEnvase()" class="plus">
+      <svg
+        width="18"
+        height="18"
+        viewBox="0 0 18 18"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M9 0.5C9.28179 0.5 9.55204 0.611942 9.7513 0.811199C9.95056 1.01046 10.0625 1.28071 10.0625 1.5625V7.9375H16.4375C16.7193 7.9375 16.9895 8.04944 17.1888 8.2487C17.3881 8.44796 17.5 8.71821 17.5 9C17.5 9.28179 17.3881 9.55204 17.1888 9.7513C16.9895 9.95056 16.7193 10.0625 16.4375 10.0625H10.0625V16.4375C10.0625 16.7193 9.95056 16.9895 9.7513 17.1888C9.55204 17.3881 9.28179 17.5 9 17.5C8.71821 17.5 8.44796 17.3881 8.2487 17.1888C8.04944 16.9895 7.9375 16.7193 7.9375 16.4375V10.0625H1.5625C1.28071 10.0625 1.01046 9.95056 0.811199 9.7513C0.611942 9.55204 0.5 9.28179 0.5 9C0.5 8.71821 0.611942 8.44796 0.811199 8.2487C1.01046 8.04944 1.28071 7.9375 1.5625 7.9375H7.9375V1.5625C7.9375 1.28071 8.04944 1.01046 8.2487 0.811199C8.44796 0.611942 8.71821 0.5 9 0.5Z"
+          fill="white"
+        />
+      </svg>
+    </button>
+  </footer>
+</main>
+
+
+<app-tipo-envase-modal NgIf="showModal === 'tipoEnvase'"></app-tipo-envase-modal>

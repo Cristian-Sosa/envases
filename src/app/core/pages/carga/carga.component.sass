@@ -1,0 +1,73 @@
+.main
+    width: 100%
+    height: 100%
+
+    display: grid
+    grid-template-columns: 1fr
+    grid-template-rows: min-content 1fr min-content
+    grid-template-areas: 'header' 'content' 'footer'
+
+.header
+    grid-area: header
+
+    .title
+        font-size: 14px
+        font-weight: 400
+
+        display: block
+
+.content
+    grid-area: content
+
+    app-lista-envases
+        width: 100%
+        height: 100%
+
+        display: block
+
+    .ticket
+        display: none
+
+.actions
+    padding-bottom: 16px
+
+    display: grid
+    grid-template-columns: 1fr 50px
+    grid-template-rows: 1fr
+    grid-template-areas: 'button1 button2'
+    gap: 16px
+
+    grid-area: footer
+
+    .plus
+        width: 100%
+        height: 100%
+
+        background-color: #295435
+        color: #FEFEFE
+        font-size: 16px
+
+        display: flex
+        justify-content: center
+        align-items: center
+
+        border: none
+        border-radius: 4px
+        outline: none
+
+        transition: background-color .2s ease
+
+        &:hover
+            background-color: lighten(#295435, 4)
+            cursor: pointer
+
+        &:active
+            background-color: #295435
+            cursor: pointer
+
+
+app-ticket-layout
+    display: none
+@media (min-width: 750px)
+    .main
+        height: calc(100% - 56px)

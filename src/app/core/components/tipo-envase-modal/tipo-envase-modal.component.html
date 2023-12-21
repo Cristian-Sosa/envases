@@ -1,0 +1,41 @@
+<div class="modal">
+  <header class="modal_header">
+    <h3 class="title">Nueva carga de envase</h3>
+    <span class="subtitle">Tipo</span>
+  </header>
+  <form
+    class="modal_form"
+    (submit)="forwardProcess()"
+    [formGroup]="tipoEnvaseForm"
+  >
+    <h4 class="title">Tipo de envase</h4>
+    <section class="form_options">
+      <app-input-radio
+        formControlName="envaseControl"
+        [optionData]="{
+          title: 'envaseControl',
+          options: tiposEnvase
+        }"
+      ></app-input-radio>
+    </section>
+    <footer class="modal_footer">
+      <app-button
+        [content]="{
+            type: 'sumbit',
+            text: 'Avanzar',
+            isPrimary: true,
+            isDisabled: false,
+          }"
+      ></app-button>
+      <app-button
+        [content]="{
+            type: 'reset',
+            text: 'Cancelar',
+            isPrimary: false,
+            isDisabled: false,
+          }"
+        (click)="returnProcess()"
+      ></app-button>
+    </footer>
+  </form>
+</div>
