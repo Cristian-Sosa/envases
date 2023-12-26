@@ -7,12 +7,7 @@ import {
   FormsModule,
 } from '@angular/forms';
 import Swal from 'sweetalert2';
-import {
-  ButtonComponent,
-  Envase,
-  InputComponent,
-  TipoEnvase,
-} from '../../../shared';
+import { ButtonComponent } from '../../../shared';
 import { InputRadioComponent } from '../../../shared/components/input-radio/input-radio.component';
 import { EnvasesService } from '../../../shared/services/envases/envases.service';
 
@@ -58,7 +53,7 @@ export class TipoEnvaseModalComponent implements OnInit {
       })
       .catch((err) => {
         Swal.fire({
-          title: 'Vaya! Algo salió mal',
+          title: '¡Vaya! Algo salió mal',
           text: 'Hubo un error obteniendo los tipos de envases, intenta reiniciar la aplicación. /n Si el problema persiste comunicate con sistemas',
           icon: 'error',
           confirmButtonText: 'Entendido',

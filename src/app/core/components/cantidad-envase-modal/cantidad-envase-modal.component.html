@@ -1,1 +1,44 @@
-<p>cantidad-envase-modal works!</p>
+<div class="modal">
+  <header class="modal_header">
+    <h3 class="title">Nueva carga de envase</h3>
+    <span class="subtitle">Tipo > Cantidad</span>
+  </header>
+  <form
+    class="modal_form"
+    (submit)="forwardProcess()"
+    [formGroup]="tipoEnvaseForm"
+  >
+    <app-select
+      [select]="{ name: 'envase', options: envases }"
+      formControlName="tipoControl"
+    ></app-select>
+
+    <app-input
+      formControlName="cantidadControl"
+      [content]="{
+        label: 'Cantidad',
+        type: 'number',
+        name: 'cantidadControl'
+      }"
+    ></app-input>
+    <footer class="modal_footer">
+      <app-button
+        [content]="{
+            type: 'sumbit',
+            text: 'Avanzar',
+            isPrimary: true,
+            isDisabled: false,
+          }"
+      ></app-button>
+      <app-button
+        [content]="{
+            type: 'reset',
+            text: 'Cancelar',
+            isPrimary: false,
+            isDisabled: false,
+          }"
+        (click)="returnProcess()"
+      ></app-button>
+    </footer>
+  </form>
+</div>

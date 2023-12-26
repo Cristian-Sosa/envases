@@ -14,3 +14,8 @@ export interface IRadioOption {
   title: string;
   name: string;
 }
+
+export interface ISelect {
+  name: string;
+  options: Array<{ value: string; description: string }>;
+}

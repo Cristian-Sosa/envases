@@ -95,7 +95,7 @@ export class AuthComponent implements OnInit {
                     Usuario: usuario.Usuario,
                   });
 
-                  this.router.navigate(['carga'])
+                  this.router.navigate(['carga']);
                 } else {
                   Swal.fire({
                     title: 'Usuario no registrado',
@@ -107,7 +107,14 @@ export class AuthComponent implements OnInit {
                   });
                 }
               })
-              .catch((err) => console.log('Hubo un error'));
+              .catch((err) =>
+                Swal.fire({
+                  title: err.message,
+                  text: 'Puede que hayas cometido un error o tu usuario se encuentre suspendido.',
+                  icon: 'error',
+                  confirmButtonText: 'Reintentar',
+                })
+              );
           }
         },
       });

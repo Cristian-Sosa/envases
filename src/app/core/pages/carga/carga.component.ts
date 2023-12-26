@@ -30,6 +30,16 @@ export class CargaComponent implements OnInit {
     ticket: string;
   };
 
+  public envaseDTO: {
+    envaseId: number | null;
+    tipoEnvaseId: number | null;
+    cantidad: number | null;
+  } = {
+    envaseId: null,
+    tipoEnvaseId: null,
+    cantidad: null,
+  };
+
   constructor(private envaseSrv: EnvasesService, private authSrv: AuthService) {
     this.datos = {
       fecha: DateTime.now().toFormat('LLL dd/MM/yyyy, hh:mm:ss'),
@@ -214,4 +224,13 @@ export class CargaComponent implements OnInit {
   };
 
   newEnvase = (): string => (this.showModal = 'tipoEnvase');
+
+  tipoEnvaseSelected = (tipoEnvaseId: number): void => {
+    if (tipoEnvaseId !== 0) {
+      this.envaseDTO.tipoEnvaseId = tipoEnvaseId;
+      this.showModal = 'cantidadEnvases';
+    } else {
+      this.showModal = 'none';
+    }
+  };
 }

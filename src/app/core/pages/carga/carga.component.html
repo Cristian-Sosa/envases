@@ -32,5 +32,11 @@
   </footer>
 </main>
 
+<app-tipo-envase-modal
+  (tipoSeleccionado)="tipoEnvaseSelected($event)"
+  *ngIf="showModal === 'tipoEnvase'"
+></app-tipo-envase-modal>
 
-<app-tipo-envase-modal NgIf="showModal === 'tipoEnvase'"></app-tipo-envase-modal>
+<app-cantidad-envase-modal
+  *ngIf="showModal === 'cantidadEnvases'"
+></app-cantidad-envase-modal>

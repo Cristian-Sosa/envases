@@ -1,0 +1,3 @@
+<select (change)="changeValue($event)">
+    <option *ngFor="let option of select.options" [value]="option.value">{{option.description}}</option>
+</select>
