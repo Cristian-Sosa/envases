@@ -1,0 +1,10 @@
+<div class="empty" *ngIf="envases.length === 0">
+  <span
+    >Vaya, parece que no tienes ninguna carga en proceso. Presiona en el botón
+    “+” para iniciar una carga nueva</span
+  >
+</div>
+
+<div *ngIf="envases" id="CargaEnvases">
+  <app-card *ngFor="let item of envases" [card]="item"></app-card>
+</div>

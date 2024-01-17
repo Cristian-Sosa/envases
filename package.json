@@ -21,6 +21,7 @@
     "@angular/router": "^17.0.0",
     "@angular/service-worker": "^17.0.0",
     "dexie": "^3.2.4",
+    "jsbarcode": "^3.11.6",
     "luxon": "^3.4.4",
     "rxjs": "~7.8.0",
     "sweetalert2": "^11.10.1",

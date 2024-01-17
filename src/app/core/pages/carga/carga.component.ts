@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { DateTime } from 'luxon';
 
-import { EnvasesService } from '../../../shared/services/envases/envases.service';
+import { EnvasesService } from '../../../shared/services';
 import { ButtonComponent } from '../../../shared';
 import {
   CantidadEnvaseModalComponent,
+  ListaEnvasesComponent,
+  TicketLayoutComponent,
   TipoEnvaseModalComponent,
 } from '../../components';
 import { AuthService } from '../../../shared/services';
@@ -17,6 +19,8 @@ import { NgIf } from '@angular/common';
     ButtonComponent,
     CantidadEnvaseModalComponent,
     TipoEnvaseModalComponent,
+    ListaEnvasesComponent,
+    TicketLayoutComponent,
     NgIf,
   ],
   providers: [EnvasesService, AuthService],

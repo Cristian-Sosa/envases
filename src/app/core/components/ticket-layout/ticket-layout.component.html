@@ -1,0 +1,41 @@
+<div id="ticketPrintComponent">
+  <main class="ticket">
+    <header class="ticket_header">
+      <img
+        class="logo"
+        src="assets/images/super-mami.png"
+        alt="logo super mami"
+      />
+      <h1 class="title">VALE PARA ENVASES</h1>
+      <h2 class="sub-title">VÁLIDO POR DÍA DE EMISIÓN</h2>
+    </header>
+    <section class="cabecera">
+      <p>N° VALE: {{ cabecera.ticket }}</p>
+      <p>USUARIO: {{ cabecera.usuario | uppercase }}</p>
+      <p>FECHA: {{ cabecera.fecha }}</p>
+    </section>
+    <section class="cuerpo">
+      <p class="separador">DETALLE DEL VALE</p>
+      <div class="card" *ngFor="let item of envases">
+        <header class="card_header">
+          <p class="envase">{{ item.descripcion }}</p>
+          <p class="unidades">{{ item.cantidades + ' u' }}</p>
+        </header>
+      </div>
+    </section>
+    <footer class="footer">
+      <div class="footer-firma">
+        <p>FIRMA Y SELLO GUARDIA</p>
+      </div>
+      <div class="firma-container">
+        <div class="footer-firma caja">
+          <p>N° TICKET</p>
+        </div>
+        <div class="footer-firma caja">
+          <p>PV</p>
+        </div>
+      </div>
+    </footer>
+    <svg id="barcode"></svg>
+  </main>
+</div>

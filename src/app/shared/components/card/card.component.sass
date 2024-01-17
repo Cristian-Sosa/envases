@@ -1,0 +1,61 @@
+.details
+    margin: 16px 0
+    padding: 0 16px
+
+    display: flex
+    flex-direction: column
+    align-items: flex-start
+    justify-content: flex-start
+
+    border-left-width: 3px
+    border-left-style: solid
+
+    position: relative
+
+    transition: transform 2s ease, opacity .25s ease-in
+
+    &.verde
+        border-color: #2F9B3A
+    &.marron
+        border-color: #9B632F
+    &.quilmes
+        border-color: #2F73B1
+    &.gaseosa
+        border-color: #B12F2F
+    &.drago
+        border-color: #5EB9EC
+    &.cajon
+        border-color: #e6ce47
+
+
+    .title
+        font-size: 18px
+        font-weight: 400
+        color: #333
+
+    .subtitle
+        margin-left: 4px
+
+        font-size: 14px
+        font-weight: 400
+        color: #A4A4A4
+
+    .cross
+        width: 24px
+
+        display: flex
+        justify-content: center
+        align-items: center
+
+        position: absolute
+        top: 0
+        right: 16px
+        bottom: auto
+        left: auto
+
+        &:hover
+            cursor: pointer
+
+.details.remove
+    transform: translateX(150%)
+    opacity: 0
