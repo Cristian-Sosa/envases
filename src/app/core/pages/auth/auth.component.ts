@@ -15,7 +15,11 @@ import {
 } from '../../../shared';
 
 import Swal from 'sweetalert2';
-import { AuthService, DbService, WebConectionService } from '../../../shared/services';
+import {
+  AuthService,
+  DbService,
+  WebConectionService,
+} from '../../../shared/services';
 import { HttpClientModule } from '@angular/common/http';
 import { take } from 'rxjs';
 
@@ -78,39 +82,51 @@ export class AuthComponent implements OnInit {
             this.router.navigate(['carga']);
           },
           error: (err) => {
-            if (err.status !== 504) {
-              Swal.fire({
-                title: 'Usuario no registrado',
-                text: 'Puede que hayas cometido un error o tu usuario se encuentre suspendido.',
-                icon: 'error',
-                confirmButtonText: 'Reintentar',
-              }).then(() => {
-                this.authForm.reset();
-              });
-            } else {
-              this.authSrv
-                .validateUserOnIndexDB(usuario)
-                .then((isUser) => {
-                  if (isUser) {
-                    this.router.navigate(['carga']);
-                  } else {
-                    Swal.fire({
-                      title: 'Usuario no registrado',
-                      text: 'Puede que hayas cometido un error o tu usuario se encuentre suspendido.',
-                      icon: 'error',
-                      confirmButtonText: 'Reintentar',
-                    });
-                  }
-                })
-                .catch((err) =>
-                  Swal.fire({
-                    title: err.message,
-                    text: 'Puede que hayas cometido un error o tu usuario se encuentre suspendido.',
-                    icon: 'error',
-                    confirmButtonText: 'Reintentar',
-                  })
-                );
-            }
+            this.authSrv.validateUserOnIndexDB(usuario).then((isUser) => {
+              if (isUser) {
+                this.router.navigate(['carga']);
+              } else {
+                Swal.fire({
+                  title: 'Usuario no registrado',
+                  text: 'Puede que hayas cometido un error o tu usuario se encuentre suspendido.',
+                  icon: 'error',
+                  confirmButtonText: 'Reintentar',
+                });
+              }
+            });
+            // if (err.status !== 504) {
+            //   Swal.fire({
+            //     title: 'Usuario no registrado',
+            //     text: 'Puede que hayas cometido un error o tu usuario se encuentre suspendido.',
+            //     icon: 'error',
+            //     confirmButtonText: 'Reintentar',
+            //   }).then(() => {
+            //     this.authForm.reset();
+            //   });
+            // } else {
+            //   this.authSrv
+            //     .validateUserOnIndexDB(usuario)
+            //     .then((isUser) => {
+            //       if (isUser) {
+            //         this.router.navigate(['carga']);
+            //       } else {
+            //         Swal.fire({
+            //           title: 'Usuario no registrado',
+            //           text: 'Puede que hayas cometido un error o tu usuario se encuentre suspendido.',
+            //           icon: 'error',
+            //           confirmButtonText: 'Reintentar',
+            //         });
+            //       }
+            //     })
+            //     .catch((err) =>
+            //       Swal.fire({
+            //         title: err.message,
+            //         text: 'Puede que hayas cometido un error o tu usuario se encuentre suspendido.',
+            //         icon: 'error',
+            //         confirmButtonText: 'Reintentar',
+            //       })
+            //     );
+            // }
           },
         });
     }
