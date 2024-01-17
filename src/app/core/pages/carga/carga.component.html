@@ -39,4 +39,6 @@
 
 <app-cantidad-envase-modal
   *ngIf="showModal === 'cantidadEnvases'"
+  [tipoEnvaseId]="envaseDTO.tipoEnvaseId"
+  (cantidadEnvase)="cantidadEnvaseSelected($event)"
 ></app-cantidad-envase-modal>

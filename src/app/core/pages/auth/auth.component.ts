@@ -15,8 +15,9 @@ import {
 } from '../../../shared';
 
 import Swal from 'sweetalert2';
-import { AuthService, WebConectionService } from '../../../shared/services';
+import { AuthService, DbService, WebConectionService } from '../../../shared/services';
 import { HttpClientModule } from '@angular/common/http';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-auth',
@@ -30,7 +31,7 @@ import { HttpClientModule } from '@angular/common/http';
   ],
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.sass',
-  providers: [AuthService],
+  providers: [AuthService, DbService],
 })
 export class AuthComponent implements OnInit {
   private connectionStatus!: string;
@@ -49,7 +50,8 @@ export class AuthComponent implements OnInit {
   constructor(
     private router: Router,
     private authSrv: AuthService,
-    private webConectionSrv: WebConectionService
+    private webConectionSrv: WebConectionService,
+    private dbSrv: DbService
   ) {}
 
   ngOnInit(): void {
@@ -67,57 +69,50 @@ export class AuthComponent implements OnInit {
     };
 
     if (this.connectionStatus === 'online') {
-      this.authSrv.validateUser(usuario).subscribe({
-        next: (res) => {
-          this.authSrv.setUserOnLocalStorage(res.data);
-          this.router.navigate(['carga']);
-        },
-        error: (err) => {
-          if (err.status !== 504) {
-            Swal.fire({
-              title: 'Usuario no registrado',
-              text: 'Puede que hayas cometido un error o tu usuario se encuentre suspendido.',
-              icon: 'error',
-              confirmButtonText: 'Reintentar',
-            }).then(() => {
-              this.authForm.reset();
-            });
-          } else {
-            this.authSrv
-              .validateUserOnIndexDB(usuario)
-              .then((usuario) => {
-                if (usuario) {
-                  this.authSrv.setUserOnLocalStorage({
-                    Id: usuario.Id,
-                    Apellido: usuario.Apellido,
-                    Nombre: usuario.Nombre,
-                    Habilitado: usuario.Habilitado,
-                    Usuario: usuario.Usuario,
-                  });
-
-                  this.router.navigate(['carga']);
-                } else {
+      this.authSrv
+        .validateUser(usuario)
+        .pipe(take(2))
+        .subscribe({
+          next: (res) => {
+            this.authSrv.setUserOnLocalStorage(res.data);
+            this.router.navigate(['carga']);
+          },
+          error: (err) => {
+            if (err.status !== 504) {
+              Swal.fire({
+                title: 'Usuario no registrado',
+                text: 'Puede que hayas cometido un error o tu usuario se encuentre suspendido.',
+                icon: 'error',
+                confirmButtonText: 'Reintentar',
+              }).then(() => {
+                this.authForm.reset();
+              });
+            } else {
+              this.authSrv
+                .validateUserOnIndexDB(usuario)
+                .then((isUser) => {
+                  if (isUser) {
+                    this.router.navigate(['carga']);
+                  } else {
+                    Swal.fire({
+                      title: 'Usuario no registrado',
+                      text: 'Puede que hayas cometido un error o tu usuario se encuentre suspendido.',
+                      icon: 'error',
+                      confirmButtonText: 'Reintentar',
+                    });
+                  }
+                })
+                .catch((err) =>
                   Swal.fire({
-                    title: 'Usuario no registrado',
+                    title: err.message,
                     text: 'Puede que hayas cometido un error o tu usuario se encuentre suspendido.',
                     icon: 'error',
                     confirmButtonText: 'Reintentar',
-                  }).then(() => {
-                    this.authForm.reset();
-                  });
-                }
-              })
-              .catch((err) =>
-                Swal.fire({
-                  title: err.message,
-                  text: 'Puede que hayas cometido un error o tu usuario se encuentre suspendido.',
-                  icon: 'error',
-                  confirmButtonText: 'Reintentar',
-                })
-              );
-          }
-        },
-      });
+                  })
+                );
+            }
+          },
+        });
     }
   };
 }

@@ -17,5 +17,5 @@ export interface IRadioOption {
 
 export interface ISelect {
   name: string;
-  options: Array<{ value: string; description: string }>;
+  options: Array<{ value: number; description: string }>;
 }

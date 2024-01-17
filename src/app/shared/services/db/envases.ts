@@ -1,0 +1,97 @@
+export const tipoEnvases = [
+  {
+    id: 1,
+    nombre: 'cerveza',
+    habilitado: true,
+  },
+  {
+    id: 2,
+    nombre: 'gaseosa',
+    habilitado: true,
+  },
+  {
+    id: 3,
+    nombre: 'drago',
+    habilitado: true,
+  },
+  {
+    id: 4,
+    nombre: 'cajón',
+    habilitado: true,
+  },
+];
+
+export const envases = [
+  {
+    id: 1,
+    codigo: '3110001',
+    ean: '3311000100001',
+    descripcion: 'Cerveza 1L (Marrón)',
+    tipoEnvaseID: 1,
+    precio: 1000.0,
+  },
+  {
+    id: 2,
+    codigo: '3110001',
+    ean: '3311000100001',
+    descripcion: 'Cerveza 1L (Verde)',
+    tipoEnvaseID: 1,
+    precio: 1000.0,
+  },
+  {
+    id: 3,
+    codigo: '3110003',
+    ean: '3110003000000',
+    descripcion: 'Gaseosa Coca Cola 2/2.5 L',
+    tipoEnvaseID: 2,
+    precio: 1000.0,
+  },
+  {
+    id: 4,
+    codigo: '3110005',
+    ean: '3311000500009',
+    descripcion: 'Garrafa Drago 250 CC',
+    tipoEnvaseID: 3,
+    precio: 2900.0,
+  },
+  {
+    id: 5,
+    codigo: '3110006',
+    ean: '3311000600006',
+    descripcion: 'Garrafa Drago 1 KG',
+    tipoEnvaseID: 3,
+    precio: 4900.0,
+  },
+  {
+    id: 6,
+    codigo: '3110012',
+    ean: '3311001200007',
+    descripcion: 'Cerveza Quilmes 340 CC',
+    tipoEnvaseID: 1,
+    precio: 300.0,
+  },
+  {
+    id: 7,
+    codigo: '3110015',
+    ean: '3311001500008',
+    descripcion: 'Cajón Coca Cola 2500 CC',
+    tipoEnvaseID: 4,
+    precio: 8000.0,
+  },
+  {
+    id: 8,
+    codigo: '9999998',
+    ean: '9999998123453',
+    descripcion: 'Cajón Quilmes 340 CC',
+    tipoEnvaseID: 4,
+    precio: 5000.0,
+  },
+  {
+    id: 9,
+    codigo: '9999999',
+    ean: '9999001321425',
+    descripcion: 'Cajón Cerveza 1 Lt',
+    tipoEnvaseID: 4,
+    precio: 8000.0,
+  },
+];

@@ -8,6 +8,7 @@ import {
   TipoEnvaseModalComponent,
 } from '../../components';
 import { AuthService } from '../../../shared/services';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-carga',
@@ -16,12 +17,13 @@ import { AuthService } from '../../../shared/services';
     ButtonComponent,
     CantidadEnvaseModalComponent,
     TipoEnvaseModalComponent,
+    NgIf,
   ],
   providers: [EnvasesService, AuthService],
   templateUrl: './carga.component.html',
   styleUrl: './carga.component.sass',
 })
-export class CargaComponent implements OnInit {
+export class CargaComponent {
   public showModal: string = 'none';
 
   public datos: {
@@ -40,17 +42,12 @@ export class CargaComponent implements OnInit {
     cantidad: null,
   };
 
-  constructor(private envaseSrv: EnvasesService, private authSrv: AuthService) {
+  constructor(private authSrv: AuthService, private envaseSrv: EnvasesService) {
     this.datos = {
       fecha: DateTime.now().toFormat('LLL dd/MM/yyyy, hh:mm:ss'),
       usuario: this.authSrv.getDataUserOnLocalStorage()?.Nombre,
       ticket: this.generarCodigoAleatorio(),
     };
-  }
-
-  ngOnInit(): void {
-    this.envaseSrv.getAllTipoEnvases().then((res) => console.log(res));
-    this.envaseSrv.getAllEnvases().then((res) => console.log(res));
   }
 
   generarCodigoAleatorio = (): string => {
@@ -223,14 +220,29 @@ export class CargaComponent implements OnInit {
     printWindow!.print();
   };
 
-  newEnvase = (): string => (this.showModal = 'tipoEnvase');
+  newEnvase = (): void => {
+    this.showModal = 'tipoEnvase';
+  };
 
   tipoEnvaseSelected = (tipoEnvaseId: number): void => {
     if (tipoEnvaseId !== 0) {
-      this.envaseDTO.tipoEnvaseId = tipoEnvaseId;
+      this.envaseDTO.tipoEnvaseId = parseInt(tipoEnvaseId.toString()!);
       this.showModal = 'cantidadEnvases';
     } else {
       this.showModal = 'none';
+    }
+  };
+
+  cantidadEnvaseSelected = (
+    obj: { envaseId: number; cantidad: number } | 0
+  ): void => {
+    if (obj !== 0) {
+      this.envaseDTO.envaseId = obj.envaseId;
+      this.envaseDTO.cantidad = obj.cantidad;
+      this.envaseSrv.cargarEnvase(this.envaseDTO);
+      this.showModal = 'none';
+    } else {
+      this.showModal = 'tipoEnvase';
     }
   };
 }

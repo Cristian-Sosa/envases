@@ -54,8 +54,8 @@ export class CantidadEnvaseModalComponent implements OnInit {
   ngOnInit(): void {
     this.envaseSrv
       .getAllEnvases()
-      .then((envases) => {
-        envases.map((envase) => {
+      .then((envasesArr) => {
+        envasesArr.map((envase) => {
           if (envase.tipoEnvaseID === this.tipoEnvaseId) {
             let envaseTemp: { value: number; description: string } = {
               value: envase.id,
@@ -66,6 +66,11 @@ export class CantidadEnvaseModalComponent implements OnInit {
           }
         });
       })
+      .then(() => {
+        this.tipoEnvaseForm.controls['tipoControl'].setValue(
+          this.envases[0].value.toString()
+        );
+      })
       .catch((err) => {
         Swal.fire({
           title: '¡Vaya! Algo salió mal',
@@ -74,8 +79,6 @@ export class CantidadEnvaseModalComponent implements OnInit {
           confirmButtonText: 'Entendido',
         });
       });
-
-    this.tipoEnvaseForm.controls['tipoControl'].setValue(this.envases[0].value);
   }
 
   capitalizarTexto(texto: string): string {
@@ -93,17 +96,16 @@ export class CantidadEnvaseModalComponent implements OnInit {
       this.tipoEnvaseForm.controls['cantidadControl'].value;
 
     if (!cantidad) {
-      // TODO: Incorporar una alerta para cantidades inválidas
       Swal.fire({
         title: '¡No puedes hacer eso!',
-        text: 'Para avanzar necesitas agregar una cantidad válida. /n Debe ser entero y positivo.',
+        text: 'Para avanzar necesitas agregar una cantidad válida. Debe ser entero y positivo.',
         icon: 'error',
         confirmButtonText: 'Entendido',
       });
     } else {
       let obj: { envaseId: number; cantidad: number } = {
         envaseId: parseInt(envase!),
-        cantidad: parseInt(cantidad),
+        cantidad: parseInt(cantidad!),
       };
 
       this.cantidadEnvase.emit(obj);
