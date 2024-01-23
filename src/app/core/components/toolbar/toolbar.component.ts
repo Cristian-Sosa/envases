@@ -1,11 +1,11 @@
 import { NgClass, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router, NavigationEnd, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-toolbar',
   standalone: true,
-  imports: [NgClass, NgIf],
+  imports: [NgClass, NgIf, RouterLink],
   templateUrl: './toolbar.component.html',
   styleUrls: [
     './assets/menu-icon.component.sass',
@@ -19,7 +19,9 @@ export class ToolbarComponent {
 
   constructor(private router: Router) {}
 
-  menuHandle = (): boolean => (this.showMenu = !this.showMenu);
+  menuHandle = (): void => {
+    this.showMenu = !this.showMenu;
+  };
 
   ngOnInit(): void {
     this.router.events.subscribe((event) => {

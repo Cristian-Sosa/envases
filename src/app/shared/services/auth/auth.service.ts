@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import Dexie from 'dexie';
 
@@ -20,7 +20,11 @@ export class AuthService {
 
   private db!: Dexie;
 
-  constructor(private http: HttpClient, private dbSrv: DbService) {
+
+  constructor(
+    private http: HttpClient, 
+    private dbSrv: DbService
+    ) {
     this.db = this.dbSrv.getDataBase();
   }
 

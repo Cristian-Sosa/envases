@@ -19,6 +19,7 @@ export class ListaEnvasesComponent implements OnInit {
   ngOnInit(): void {
     this.envaseSrv.getCargaEnvasesObservable().subscribe({
       next: (cargaEnvases) => {
+        console.log(cargaEnvases)
         this.envases = cargaEnvases;
       },
       error: () => {

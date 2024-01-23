@@ -3,7 +3,7 @@
     <header class="ticket_header">
       <img
         class="logo"
-        src="assets/images/super-mami.png"
+        [src]="image"
         alt="logo super mami"
       />
       <h1 class="title">VALE PARA ENVASES</h1>
@@ -19,7 +19,7 @@
       <div class="card" *ngFor="let item of envases">
         <header class="card_header">
           <p class="envase">{{ item.descripcion }}</p>
-          <p class="unidades">{{ item.cantidades + ' u' }}</p>
+          <p class="unidades">{{ "x".concat(item.cantidades) }}</p>
         </header>
       </div>
     </section>

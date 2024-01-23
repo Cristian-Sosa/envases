@@ -20,7 +20,6 @@ import { EnvasesService } from '../../../shared/services/envases/envases.service
     ReactiveFormsModule,
     FormsModule,
   ],
-  providers: [EnvasesService],
   templateUrl: './tipo-envase-modal.component.html',
   styleUrl: './tipo-envase-modal.component.sass',
 })

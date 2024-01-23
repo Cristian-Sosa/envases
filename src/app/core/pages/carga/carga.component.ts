@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DateTime } from 'luxon';
 
 import { EnvasesService } from '../../../shared/services';
@@ -23,12 +23,13 @@ import { NgIf } from '@angular/common';
     TicketLayoutComponent,
     NgIf,
   ],
-  providers: [EnvasesService, AuthService],
   templateUrl: './carga.component.html',
   styleUrl: './carga.component.sass',
 })
-export class CargaComponent {
+export class CargaComponent implements OnInit {
   public showModal: string = 'none';
+
+  public isCargaActual: boolean = false;
 
   public datos: {
     fecha: string;
@@ -47,11 +48,32 @@ export class CargaComponent {
   };
 
   constructor(private authSrv: AuthService, private envaseSrv: EnvasesService) {
+    let currentDate = new Date();
+
+    let formattedDate = currentDate.toLocaleString('es-ES', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric',
+    });
+
     this.datos = {
-      fecha: DateTime.now().toFormat('LLL dd/MM/yyyy, hh:mm:ss'),
+      fecha: formattedDate.toUpperCase(),
       usuario: this.authSrv.getDataUserOnLocalStorage()?.Nombre,
       ticket: this.generarCodigoAleatorio(),
     };
+  }
+  ngOnInit(): void {
+    this.envaseSrv.getCargaEnvasesObservable().subscribe({
+      next: (carga) => {
+        this.isCargaActual = carga.length > 0;
+      },
+      error: (err) => {
+        this.isCargaActual = false;
+      },
+    });
   }
 
   generarCodigoAleatorio = (): string => {
@@ -60,8 +82,19 @@ export class CargaComponent {
   };
 
   printCarga = () => {
+    let currentDate = new Date();
+
+    let formattedDate = currentDate.toLocaleString('es-ES', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric',
+    });
+
     this.datos = {
-      fecha: DateTime.now().toFormat('LLL dd/MM/yyyy, hh:mm').toUpperCase(),
+      fecha: formattedDate.toUpperCase(),
       usuario: this.authSrv.getDataUserOnLocalStorage()?.Nombre,
       ticket: this.generarCodigoAleatorio(),
     };
@@ -86,8 +119,8 @@ export class CargaComponent {
           margin: 0;
           padding: 0;
           box-sizing: border-box;
-          font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
           color: #000;
+          font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
         }
         
         body {
@@ -105,57 +138,58 @@ export class CargaComponent {
         }
 
         .ticket_header .logo {
-          width: 100%;
-          margin-bottom: 8px;
+          width: 90%;
+          margin-bottom: 16px;
           object-fit: container;
         }
 
-        .ticket_header .title {
-          margin-bottom: 2px;
-          font-size: 14px;
-        }
-        
-        .ticket_header .sub-title {
-          font-size: 10px;
-          font-weight: 500;
+        .ticket_header .title, .ticket_header .sub-title {
+          margin-bottom: 4px;
+          font-size: 16px;
+          font-weight: 300;
         }
         
         .cabecera {
-          padding-top: 16px;
+          padding-top: 20px;
         
           display: flex;
           flex-direction: column;
           justify-content: flex-start;
           align-items: stretch;
-          gap: 2px;
+          gap: 4px;
 
-          font-size: 8px;
-          font-weight: 500;
+          font-size: 12px;
+          font-weight: 300;
         }
         
         .cuerpo {
-          padding: 16px 0;
+          padding: 20px 0;
         
           display: flex;
           flex-direction: column;
           justify-content: flex-start;
           align-items: stretch;
 
-          font-size: 10px;
-          font-weight: 500;
+          font-size: 12px;
+          font-weight: 300;
         }
         
         .cuerpo .separador {
-          margin-bottom: 8px;
-          font-size: 8px;
+          margin-bottom: 4px;
+          font-size: 14px;
         }
         
         .card {        
           width: 100%;
+          margin: 2px 0;
           display: flex;
           flex-direction: column;
           justify-content: flex-start;
           align-items: strech;
+        }
+
+        .card .card_header .envase, .card .card_header .unidades {        
+          font-size: 14px;
         }
 
         .card_header {     
@@ -176,7 +210,7 @@ export class CargaComponent {
         
         .firma-container {
           width: 100%;
-          margin-top: 8px;
+          margin-top: 10px;
 
           display: flex;
           flex-direction: row;
@@ -187,7 +221,7 @@ export class CargaComponent {
         .footer-firma {
           width: 80%;
         
-          margin: 32px auto 0;
+          margin: 42px auto 0;
         
           display: flex;
           flex-direction: column;
@@ -204,7 +238,8 @@ export class CargaComponent {
         .footer-firma p {
           margin-top: 4px;
           text-align: center;
-          font-size: 8px;
+          font-size: 12px;
+          font-weight: 300;
         }
 
         main svg {

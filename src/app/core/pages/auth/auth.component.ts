@@ -35,7 +35,6 @@ import { take } from 'rxjs';
   ],
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.sass',
-  providers: [AuthService, DbService],
 })
 export class AuthComponent implements OnInit {
   private connectionStatus!: string;
@@ -72,63 +71,61 @@ export class AuthComponent implements OnInit {
       Password: this.authForm.get('passControl')?.value!,
     };
 
-    if (this.connectionStatus === 'online') {
-      this.authSrv
-        .validateUser(usuario)
-        .pipe(take(2))
-        .subscribe({
-          next: (res) => {
-            this.authSrv.setUserOnLocalStorage(res.data);
-            this.router.navigate(['carga']);
-          },
-          error: (err) => {
-            this.authSrv.validateUserOnIndexDB(usuario).then((isUser) => {
-              if (isUser) {
-                this.router.navigate(['carga']);
-              } else {
-                Swal.fire({
-                  title: 'Usuario no registrado',
-                  text: 'Puede que hayas cometido un error o tu usuario se encuentre suspendido.',
-                  icon: 'error',
-                  confirmButtonText: 'Reintentar',
-                });
-              }
-            });
-            // if (err.status !== 504) {
-            //   Swal.fire({
-            //     title: 'Usuario no registrado',
-            //     text: 'Puede que hayas cometido un error o tu usuario se encuentre suspendido.',
-            //     icon: 'error',
-            //     confirmButtonText: 'Reintentar',
-            //   }).then(() => {
-            //     this.authForm.reset();
-            //   });
-            // } else {
-            //   this.authSrv
-            //     .validateUserOnIndexDB(usuario)
-            //     .then((isUser) => {
-            //       if (isUser) {
-            //         this.router.navigate(['carga']);
-            //       } else {
-            //         Swal.fire({
-            //           title: 'Usuario no registrado',
-            //           text: 'Puede que hayas cometido un error o tu usuario se encuentre suspendido.',
-            //           icon: 'error',
-            //           confirmButtonText: 'Reintentar',
-            //         });
-            //       }
-            //     })
-            //     .catch((err) =>
-            //       Swal.fire({
-            //         title: err.message,
-            //         text: 'Puede que hayas cometido un error o tu usuario se encuentre suspendido.',
-            //         icon: 'error',
-            //         confirmButtonText: 'Reintentar',
-            //       })
-            //     );
-            // }
-          },
-        });
-    }
+    this.authSrv
+      .validateUser(usuario)
+      .pipe(take(2))
+      .subscribe({
+        next: (res) => {
+          this.authSrv.setUserOnLocalStorage(res.data);
+          this.router.navigate(['carga']);
+        },
+        error: (err) => {
+          this.authSrv.validateUserOnIndexDB(usuario).then((isUser) => {
+            if (isUser) {
+              this.router.navigate(['carga']);
+            } else {
+              Swal.fire({
+                title: 'Usuario no registrado',
+                text: 'Puede que hayas cometido un error o tu usuario se encuentre suspendido.',
+                icon: 'error',
+                confirmButtonText: 'Reintentar',
+              });
+            }
+          });
+          // if (err.status !== 504) {
+          //   Swal.fire({
+          //     title: 'Usuario no registrado',
+          //     text: 'Puede que hayas cometido un error o tu usuario se encuentre suspendido.',
+          //     icon: 'error',
+          //     confirmButtonText: 'Reintentar',
+          //   }).then(() => {
+          //     this.authForm.reset();
+          //   });
+          // } else {
+          //   this.authSrv
+          //     .validateUserOnIndexDB(usuario)
+          //     .then((isUser) => {
+          //       if (isUser) {
+          //         this.router.navigate(['carga']);
+          //       } else {
+          //         Swal.fire({
+          //           title: 'Usuario no registrado',
+          //           text: 'Puede que hayas cometido un error o tu usuario se encuentre suspendido.',
+          //           icon: 'error',
+          //           confirmButtonText: 'Reintentar',
+          //         });
+          //       }
+          //     })
+          //     .catch((err) =>
+          //       Swal.fire({
+          //         title: err.message,
+          //         text: 'Puede que hayas cometido un error o tu usuario se encuentre suspendido.',
+          //         icon: 'error',
+          //         confirmButtonText: 'Reintentar',
+          //       })
+          //     );
+          // }
+        },
+      });
   };
 }

@@ -5,6 +5,6 @@
   >
 </div>
 
-<div *ngIf="envases" id="CargaEnvases">
+<div *ngIf="envases.length > 0" id="CargaEnvases">
   <app-card *ngFor="let item of envases" [card]="item"></app-card>
 </div>

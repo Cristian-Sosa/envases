@@ -19,3 +19,9 @@ export interface EnvaseDTO {
   tipoEnvaseId: number | null;
   cantidad: number | null;
 }
+
+export interface IVale {
+  NombreSucursal: string;
+  nroVale: string;
+  items: Envase[];
+}

@@ -2,7 +2,7 @@
   "name": "envases",
   "short_name": "Dino Envases",
   "theme_color": "#F0DA50",
-  "background_color": "#FEFEFE",
+  "background_color": "#F0DA50",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",

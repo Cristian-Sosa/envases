@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Envase, EnvaseDTO, TipoEnvase } from '../../models';
-import Dexie from 'dexie';
 import { BehaviorSubject, Observable } from 'rxjs';
+
+import { Envase, EnvaseDTO, TipoEnvase } from '../../models';
 import { DbService } from '../db';
+
 import Swal from 'sweetalert2';
+import Dexie from 'dexie';
 
 @Injectable({
   providedIn: 'root',
@@ -49,6 +51,7 @@ export class EnvasesService {
   };
 
   addEnvase = (envase: Envase): void => {
+    console.log(envase)
     this.cargaEnvases.push(envase);
     this._cargaEnvases.next(this.cargaEnvases);
     localStorage.setItem('carga_actual', JSON.stringify(this.cargaEnvases));
@@ -61,8 +64,6 @@ export class EnvasesService {
     let envases: Envase[];
 
     try {
-      console.log(envaseDTO.envaseId);
-
       let envases = await this.getAllEnvases();
 
       envaseFiltrado = envases.find(
