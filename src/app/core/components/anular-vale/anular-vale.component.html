@@ -1,0 +1,39 @@
+<div class="modal">
+    <header class="modal_header">
+      <h3 class="title">Anular vale</h3>
+    </header>
+    <form
+      class="modal_form"
+      (submit)="forwardProcess()"
+      [formGroup]="valeForm"
+    >  
+      <app-input
+        formControlName="valeControl"
+        [content]="{
+          label: 'Número de vale',
+          type: 'number',
+          name: 'valeControl'
+        }"
+      ></app-input>
+      <footer class="modal_footer">
+        <app-button
+          [content]="{
+              type: 'sumbit',
+              text: 'Anular vale',
+              isPrimary: true,
+              isDisabled: false,
+            }"
+        ></app-button>
+        <app-button
+          [content]="{
+              type: 'reset',
+              text: 'Cancelar',
+              isPrimary: false,
+              isDisabled: false,
+            }"
+          (click)="returnProcess()"
+        ></app-button>
+      </footer>
+    </form>
+  </div>
+  

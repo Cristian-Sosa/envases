@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { DateTime } from 'luxon';
 
-import { EnvasesService } from '../../../shared/services';
-import { ButtonComponent } from '../../../shared';
+import { EnvasesService, ValeService } from '../../../shared/services';
+import { ButtonComponent, Envase, IVale } from '../../../shared';
 import {
+  AnularValeComponent,
   CantidadEnvaseModalComponent,
   ListaEnvasesComponent,
   TicketLayoutComponent,
@@ -11,6 +12,9 @@ import {
 } from '../../components';
 import { AuthService } from '../../../shared/services';
 import { NgIf } from '@angular/common';
+
+import Swal from 'sweetalert2';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-carga',
@@ -21,7 +25,9 @@ import { NgIf } from '@angular/common';
     TipoEnvaseModalComponent,
     ListaEnvasesComponent,
     TicketLayoutComponent,
+    AnularValeComponent,
     NgIf,
+    RouterOutlet,
   ],
   templateUrl: './carga.component.html',
   styleUrl: './carga.component.sass',
@@ -30,6 +36,7 @@ export class CargaComponent implements OnInit {
   public showModal: string = 'none';
 
   public isCargaActual: boolean = false;
+  private carga: Envase[] = [];
 
   public datos: {
     fecha: string;
@@ -47,7 +54,11 @@ export class CargaComponent implements OnInit {
     cantidad: null,
   };
 
-  constructor(private authSrv: AuthService, private envaseSrv: EnvasesService) {
+  constructor(
+    private authSrv: AuthService,
+    private envaseSrv: EnvasesService,
+    private valeSrv: ValeService
+  ) {
     let currentDate = new Date();
 
     let formattedDate = currentDate.toLocaleString('es-ES', {
@@ -68,6 +79,7 @@ export class CargaComponent implements OnInit {
   ngOnInit(): void {
     this.envaseSrv.getCargaEnvasesObservable().subscribe({
       next: (carga) => {
+        this.carga = carga;
         this.isCargaActual = carga.length > 0;
       },
       error: (err) => {
@@ -99,19 +111,39 @@ export class CargaComponent implements OnInit {
       ticket: this.generarCodigoAleatorio(),
     };
 
-    // this.valeService.sendVale(this.datos.ticket).subscribe({
-    //   next: (res) => {
-    //     console.log(res);
-    //     this.valeService.setEan(res.barcode.CodBarra1);
-    //   },
-    //   error: (err) => {
-    //     console.log(err);
-    //   },
-    // });
+    this.valeSrv
+      .sendVale(this.datos.ticket)
+      .subscribe({
+        next: (res) => {
+          this.valeSrv.setEan(res.barcode.CodBarra1);
+          Swal.fire({
+            title: 'Vale registrado',
+            text: 'El vale se guardó correctamente, no necesitarás subirlo luego.',
+            icon: 'success',
+            confirmButtonText: 'Continuar',
+          });
+        },
+        error: (res) => {
+          let valeConError: IVale = {
+            nroVale: this.datos.ticket,
+            NombreSucursal: this.datos.usuario?.toUpperCase()!,
+            items: this.carga,
+          };
 
-    const printWindow = window.open('', '_blank');
+          this.valeSrv.guardarVale(valeConError);
 
-    printWindow!.document.write(`<html>
+          Swal.fire({
+            title: 'El vale no se registró',
+            text: 'Hubo un error de conexión, guardaremos el vale y podrás subirlo más tarde.',
+            icon: 'warning',
+            confirmButtonText: 'Continuar',
+          });
+        },
+      })
+      .add(() => {
+        const printWindow = window.open('', '_blank');
+
+        printWindow!.document.write(`<html>
     <head>
       <title>Vale de envases - preview</title>
       <style type="text/css">
@@ -146,7 +178,7 @@ export class CargaComponent implements OnInit {
         .ticket_header .title, .ticket_header .sub-title {
           margin-bottom: 4px;
           font-size: 16px;
-          font-weight: 300;
+          font-weight: 400;
         }
         
         .cabecera {
@@ -159,7 +191,7 @@ export class CargaComponent implements OnInit {
           gap: 4px;
 
           font-size: 12px;
-          font-weight: 300;
+          font-weight: 400;
         }
         
         .cuerpo {
@@ -171,7 +203,7 @@ export class CargaComponent implements OnInit {
           align-items: stretch;
 
           font-size: 12px;
-          font-weight: 300;
+          font-weight: 400;
         }
         
         .cuerpo .separador {
@@ -239,7 +271,7 @@ export class CargaComponent implements OnInit {
           margin-top: 4px;
           text-align: center;
           font-size: 12px;
-          font-weight: 300;
+          font-weight: 400;
         }
 
         main svg {
@@ -247,16 +279,19 @@ export class CargaComponent implements OnInit {
         }
       </style>
     </head>
-    <body>`);
+          <body>`);
 
-    printWindow!.document.write(
-      document.querySelector('#ticketPrintComponent')?.innerHTML!
-    );
+        printWindow!.document.write(
+          document.querySelector('#ticketPrintComponent')?.innerHTML!
+        );
 
-    printWindow!.document.write(`</body></html>`);
+        printWindow!.document.write(`</body></html>`);
 
-    printWindow!.document.close();
-    printWindow!.print();
+        printWindow!.document.close();
+        printWindow!.print();
+
+        this.envaseSrv.resetVale();
+      });
   };
 
   newEnvase = (): void => {

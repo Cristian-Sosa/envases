@@ -15,14 +15,16 @@ export class ListaEnvasesComponent implements OnInit {
   constructor(private envaseSrv: EnvasesService) {}
 
   public envases: Envase[] = [];
+  public isCarga: boolean = false;
 
   ngOnInit(): void {
     this.envaseSrv.getCargaEnvasesObservable().subscribe({
       next: (cargaEnvases) => {
-        console.log(cargaEnvases)
         this.envases = cargaEnvases;
+        this.isCarga = cargaEnvases.length > 0
       },
       error: () => {
+        this.envases = [];
         throw new Error('Error obteniendo carga');
       },
     });

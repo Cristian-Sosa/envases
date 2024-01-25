@@ -64,7 +64,7 @@ export class DbService {
   getCargaEnvases = async (): Promise<Envase[]> => {
     let envases: Envase[] = [];
     await this.db
-      .table('envases')
+      .table('envase')
       .toArray()
       .then((envasesResponse) => {
         envases = envasesResponse;

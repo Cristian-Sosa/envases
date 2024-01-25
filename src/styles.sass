@@ -33,6 +33,8 @@ body, html
   height: 100vh
 
   background-color: #FEFEFE
+  font-size: 10px
+  font-display: auto
 
   overflow: hidden
 
@@ -43,10 +45,11 @@ a, p, span, h1, h2, h3, h4, h5, h6, pre, label, input, div
   line-height: 1.4
 
 app-auth, app-carga
-  width: min(100vw, 560px)
+  width: min(100%, 750px)
   height: calc(100vh - 56px)
 
-  margin: 0 auto
+  margin: auto
+
   padding: 32px 24px 16px
 
   display: flex
@@ -58,7 +61,7 @@ app-auth, app-carga
 app-input, app-select
   width: 100%
 
-app-tipo-envase-modal, app-cantidad-envase-modal
+app-tipo-envase-modal, app-cantidad-envase-modal, app-anular-vale
   width: 100vw
   height: 100vh
 
@@ -74,6 +77,9 @@ app-tipo-envase-modal, app-cantidad-envase-modal
   top: 0
   left: 0
 
+app-anular-vale
+  padding-top: 80px
+
 @keyframes fadeInDown-mobile
   0%, 32%
     opacity: 0
@@ -82,3 +88,8 @@ app-tipo-envase-modal, app-cantidad-envase-modal
   64%, 100%
     opacity: 1
     transform: translate3d(-50%, 100%, 0)
+
+
+@media (min-width: 750px)
+  body, html
+    font-size: 16px

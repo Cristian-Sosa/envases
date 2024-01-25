@@ -40,14 +40,15 @@ export class TicketLayoutComponent implements OnInit, OnChanges {
     this.envaseSrv.getCargaEnvasesObservable().subscribe({
       next: (envases) => {
         this.envases = envases;
-      }, error: (err) => {
-        this.envases = []
-        console.log(err)
-      }
+      },
+      error: (err) => {
+        this.envases = [];
+      },
     });
-    this.valeSrv.getEAN().subscribe((res) => {
-      this.ean = res;
-      console.log(this.ean);
+    this.valeSrv.getEAN().subscribe((ean) => {
+      this.ean = ean;
+      console.log({ticketLayout: this.ean})
+      this.generateEAN13Barcode()
     });
   }
 
@@ -56,13 +57,14 @@ export class TicketLayoutComponent implements OnInit, OnChanges {
   }
 
   generateEAN13Barcode = () => {
-    console.log(this.ean);
-    JsBarcode('#barcode', this.ean, {
-      format: 'EAN13',
-      lineColor: '#333',
-      width: 1.5,
-      height: 20,
-      displayValue: true,
-    });
+    if (this.ean !== '') {
+      JsBarcode('#barcode', this.ean, {
+        format: 'EAN13',
+        lineColor: '#333',
+        width: 1.5,
+        height: 20,
+        displayValue: true,
+      });
+    }
   };
 }

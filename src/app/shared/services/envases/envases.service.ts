@@ -20,6 +20,7 @@ export class EnvasesService {
 
   constructor(private dbSrv: DbService) {
     this.db = this.dbSrv.getDataBase();
+    this._cargaEnvases.next([])
   }
 
   getAllTipoEnvases = async (): Promise<TipoEnvase[]> => {
@@ -51,7 +52,6 @@ export class EnvasesService {
   };
 
   addEnvase = (envase: Envase): void => {
-    console.log(envase)
     this.cargaEnvases.push(envase);
     this._cargaEnvases.next(this.cargaEnvases);
     localStorage.setItem('carga_actual', JSON.stringify(this.cargaEnvases));
@@ -107,5 +107,11 @@ export class EnvasesService {
 
       localStorage.setItem('carga_actual', JSON.stringify(this.cargaEnvases));
     }
+  };
+
+  resetVale = (): void => {
+    this.cargaEnvases = [];
+    this._cargaEnvases.next(this.cargaEnvases);
+    localStorage.setItem('carga_actual', JSON.stringify(this.cargaEnvases));
   };
 }

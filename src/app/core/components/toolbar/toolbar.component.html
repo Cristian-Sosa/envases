@@ -13,9 +13,9 @@
 
 <div *ngIf="showHamburgerMenu" [ngClass]="{ options: true, active: showMenu }">
   <ul [ngClass]="{ options_list: true, active: showMenu }">
-    <li><a routerLink="">Anular carga</a></li>
-    <li><a routerLink="">Reimprimir vale</a></li>
-    <li><a routerLink="">Imprimir movimientos</a></li>
+    <li><a routerLink="carga/anular-vale" (click)="menuHandle()">Anular vale</a></li>
+    <li><a routerLink="" (click)="menuHandle()">Reimprimir vale</a></li>
+    <li><a routerLink="" (click)="menuHandle()">Imprimir movimientos</a></li>
     <li><a routerLink="/inicio-sesion" (click)="menuHandle()">Cerrar sesión</a></li>
   </ul>
 </div>

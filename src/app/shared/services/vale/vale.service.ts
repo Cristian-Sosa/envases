@@ -27,13 +27,21 @@ export class ValeService {
 
   private ean: BehaviorSubject<string> = new BehaviorSubject('');
 
-  sendVale = (nroVale: string): Observable<any> => {
+  sendVale = (nroVale: string, step: boolean = false): Observable<any> => {
     this.vale.nroVale = nroVale;
 
-    this.cargarVale();
+    if (!step) {
+      this.cargarVale();
+    }
 
     return this.http.post<any>(environment.apiUrl.concat('/vale/AddVale'), {
       carga: this.vale,
+    });
+  };
+
+  anularVale = (nroVale: string): Observable<any> => {
+    return this.http.patch(environment.apiUrl.concat('/vale/AnularVale'), {
+      nroVale: nroVale,
     });
   };
 
@@ -72,8 +80,48 @@ export class ValeService {
     });
   };
 
+  guardarVale = (vale: IVale): void => {
+    let isValesPendientes: string | null =
+      localStorage.getItem('vales_pendientes');
+
+    let vales: IVale[] = [];
+
+    if (isValesPendientes !== null) {
+      vales = JSON.parse(isValesPendientes!);
+    }
+
+    vales.push(vale);
+    localStorage.setItem('vales_pendientes', JSON.stringify(vales));
+  };
+
+  revisarVales = async () => {
+    let cargasString: string | null = localStorage.getItem('vales_pendientes');
+
+    if (cargasString) {
+      let valesPendientes: IVale[] = JSON.parse(cargasString);
+
+      for (let i = 0; i < valesPendientes.length; i++) {
+        const vale: IVale = valesPendientes[i];
+
+        this.vale = vale;
+
+        this.sendVale(vale.nroVale, true)
+          .subscribe({
+            next: (res) => {
+              console.log(`El vale ${vale.nroVale} fue subido correctamente`);
+            },
+            error: (err) => {
+              console.error(`El vale ${vale.nroVale} no pudo ser subido`);
+            },
+          })
+          .unsubscribe();
+      }
+    }
+  };
+
   setEan = (newEan: string): void => {
     this.ean.next(newEan);
+    console.log(newEan);
   };
 
   getEAN = (): Observable<string> => {
