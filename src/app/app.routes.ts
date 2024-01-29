@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { AnularValeComponent } from './core/components';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'inicio-sesion', pathMatch: 'full' },
@@ -15,6 +14,11 @@ export const routes: Routes = [
         path: 'anular-vale',
         loadComponent: () =>
           import('./index').then((m) => m.AnularValeComponent),
+      },
+      {
+        path: 'reimprimir-vale',
+        loadComponent: () =>
+          import('./index').then((m) => m.ReimprimirValeComponent),
       },
     ],
   },
