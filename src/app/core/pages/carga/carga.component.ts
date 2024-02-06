@@ -107,7 +107,7 @@ export class CargaComponent implements OnInit {
 
     this.datos = {
       fecha: formattedDate.toUpperCase(),
-      usuario: this.authSrv.getDataUserOnLocalStorage()?.Nombre,
+      usuario: this.authSrv.getDataUserOnLocalStorage()?.Usuario,
       ticket: this.generarCodigoAleatorio(),
     };
 

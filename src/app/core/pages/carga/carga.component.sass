@@ -1,11 +1,9 @@
 .main
     width: 100%
-    height: 100%
+    height: 100vh
 
-    display: grid
-    grid-template-columns: 1fr
-    grid-template-rows: min-content 1fr min-content
-    grid-template-areas: 'header' 'content' 'footer'
+    display: flex
+    flex-direction: column
 
 .header
     grid-area: header
@@ -17,13 +15,8 @@
         display: block
 
 .content
-    grid-area: content
-
-    app-lista-envases
-        width: 100%
-        height: 100%
-
-        display: block
+    flex: 1
+    overflow-y: auto
 
     .ticket
         display: none
@@ -37,7 +30,8 @@
     grid-template-areas: 'button1 button2'
     gap: 16px
 
-    grid-area: footer
+    position: sticky
+    bottom: 0
 
     .plus
         width: 100%
