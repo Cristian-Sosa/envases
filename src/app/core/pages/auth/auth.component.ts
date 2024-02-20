@@ -76,7 +76,7 @@ export class AuthComponent implements OnInit {
       .pipe(take(2))
       .subscribe({
         next: (res) => {
-          this.authSrv.setUserOnLocalStorage(res.data);
+          this.authSrv.setUserOnLocalStorage(res);
           this.router.navigate(['carga']);
         },
         error: (err) => {

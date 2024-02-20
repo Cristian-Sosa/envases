@@ -12,7 +12,6 @@ export interface IShortUser {
   Nombre: string;
   Apellido: string;
   Usuario: string;
-  Habilitado: boolean;
 }
 export interface IUserToVerify {
   Usuario: string;

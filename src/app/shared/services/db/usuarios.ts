@@ -6,7 +6,6 @@ export const usuarios = [
     Apellido: 'Super MAMI AV',
     Usuario: 'AV',
     Password: '1234',
-    Habilitado: true,
   },
   {
     Id: 40,
@@ -15,7 +14,6 @@ export const usuarios = [
     Apellido: 'Super MAMI AV',
     Usuario: 'R20',
     Password: '1234',
-    Habilitado: true,
   },
   {
     Id: 41,
@@ -24,7 +22,6 @@ export const usuarios = [
     Apellido: 'Super MAMI SV',
     Usuario: 'SV',
     Password: '1234',
-    Habilitado: true,
   },
   {
     Id: 42,
@@ -33,7 +30,6 @@ export const usuarios = [
     Apellido: 'Super MAMI CVL',
     Usuario: 'CVL',
     Password: '1234',
-    Habilitado: true,
   },
   {
     Id: 43,
@@ -42,7 +38,6 @@ export const usuarios = [
     Apellido: 'Super MAMI SAL',
     Usuario: 'SAL',
     Password: '1234',
-    Habilitado: true,
   },
   {
     Id: 44,
@@ -51,7 +46,6 @@ export const usuarios = [
     Apellido: 'Super MAMI 60C',
     Usuario: '60C',
     Password: '1234',
-    Habilitado: true,
   },
   {
     Id: 45,
@@ -60,7 +54,6 @@ export const usuarios = [
     Apellido: 'Super MAMI AG',
     Usuario: 'AG',
     Password: '1234',
-    Habilitado: true,
   },
   {
     Id: 46,
@@ -69,7 +62,6 @@ export const usuarios = [
     Apellido: 'Tadicor Las Heras',
     Usuario: 'TLH',
     Password: '1234',
-    Habilitado: true,
   },
   {
     Id: 47,
@@ -78,7 +70,6 @@ export const usuarios = [
     Apellido: 'Tadicor San Martín',
     Usuario: 'TSM',
     Password: '1234',
-    Habilitado: true,
   },
   {
     Id: 48,
@@ -87,7 +78,6 @@ export const usuarios = [
     Apellido: 'Super MAMI COC',
     Usuario: 'COC',
     Password: '1234',
-    Habilitado: true,
   },
   {
     Id: 49,
@@ -96,7 +86,6 @@ export const usuarios = [
     Apellido: 'Sosa',
     Usuario: 'csosa',
     Password: '1234',
-    Habilitado: true,
   },
   {
     Id: 50,
@@ -105,7 +94,6 @@ export const usuarios = [
     Apellido: 'Castillo',
     Usuario: 'mcastillo',
     Password: '1234',
-    Habilitado: true,
   },
   {
     Id: 51,
@@ -114,7 +102,6 @@ export const usuarios = [
     Apellido: 'Molina',
     Usuario: 'mmolina',
     Password: '1234',
-    Habilitado: true,
   },
   {
     Id: 52,
@@ -123,7 +110,6 @@ export const usuarios = [
     Apellido: 'Buttiero',
     Usuario: 'rbuttiero',
     Password: '1234',
-    Habilitado: true,
   },
   {
     Id: 53,
@@ -132,7 +118,6 @@ export const usuarios = [
     Apellido: 'Tevez',
     Usuario: 'gtevez',
     Password: '1234',
-    Habilitado: true,
   },
   {
     Id: 54,
@@ -141,7 +126,6 @@ export const usuarios = [
     Apellido: 'Marino',
     Usuario: 'pmarino',
     Password: '1234',
-    Habilitado: true,
   },
   {
     Id: 55,
@@ -150,7 +134,6 @@ export const usuarios = [
     Apellido: 'Barrera',
     Usuario: 'dbarrera',
     Password: '1234',
-    Habilitado: true,
   },
   {
     Id: 56,
@@ -159,7 +142,6 @@ export const usuarios = [
     Apellido: 'Portillo',
     Usuario: 'rportillo',
     Password: '1234',
-    Habilitado: true,
   },
   {
     Id: 57,
@@ -168,7 +150,6 @@ export const usuarios = [
     Apellido: 'Huanco',
     Usuario: 'ehuanco',
     Password: '1234',
-    Habilitado: true,
   },
   {
     Id: 58,
@@ -177,7 +158,6 @@ export const usuarios = [
     Apellido: 'Chavez',
     Usuario: 'mchavez',
     Password: '1234',
-    Habilitado: true,
   },
   {
     Id: 59,
@@ -186,7 +166,6 @@ export const usuarios = [
     Apellido: 'Rosales',
     Usuario: 'mrosales',
     Password: '1234',
-    Habilitado: true,
   },
   {
     Id: 60,
@@ -195,7 +174,6 @@ export const usuarios = [
     Apellido: 'Urriche',
     Usuario: 'murriche',
     Password: '1234',
-    Habilitado: true,
   },
   {
     Id: 61,
@@ -204,6 +182,5 @@ export const usuarios = [
     Apellido: 'Admin',
     Usuario: 'admin',
     Password: '1234',
-    Habilitado: true,
   },
 ];

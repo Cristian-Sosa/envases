@@ -1,13 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import Dexie from 'dexie';
 
 import {
-  IActiveUsersResponse,
   IShortUser,
   IUserToVerify,
-  IValidateUserResponse,
 } from '../../models';
 import { DbService } from '../db';
 import { environment } from '../../../../environments/environment.development';
@@ -20,7 +18,6 @@ export class AuthService {
 
   private db!: Dexie;
 
-
   constructor(
     private http: HttpClient, 
     private dbSrv: DbService
@@ -28,17 +25,17 @@ export class AuthService {
     this.db = this.dbSrv.getDataBase();
   }
 
-  getAllActiveUsers = (): Observable<IActiveUsersResponse> => {
-    return this.http.get<IActiveUsersResponse>(
-      environment.apiUrl.concat('/user/AllActiveUsers')
+  getAllActiveUsers = (): Observable<IShortUser[]> => {
+    return this.http.get<IShortUser[]>(
+      environment.apiUrl.concat('Usuarios/AllActives')
     );
   };
 
   validateUser = (
     usuario: IUserToVerify
-  ): Observable<IValidateUserResponse> => {
-    return this.http.post<IValidateUserResponse>(
-      environment.apiUrl.concat('/user/ValidateUser'),
+  ): Observable<IShortUser> => {
+    return this.http.post<IShortUser>(
+      environment.apiUrl.concat('Usuarios/Auth'),
       usuario
     );
   };
@@ -54,7 +51,6 @@ export class AuthService {
           Id: res.Id,
           Apellido: res.Apellido,
           Nombre: res.Nombre,
-          Habilitado: res.Habilitado,
           Usuario: res.Usuario,
         });
       } else {
