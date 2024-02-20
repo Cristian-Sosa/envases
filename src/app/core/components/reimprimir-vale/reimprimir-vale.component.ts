@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { ValeService, EnvasesService } from '../../../shared/services';
+import { ValeService, EnvasesService, AuthService } from '../../../shared/services';
 import { InputComponent, ButtonComponent } from '../../../shared';
 
 @Component({
@@ -16,7 +16,8 @@ export class ReimprimirValeComponent {
   constructor(
     private router: Router,
     private valeSrv: ValeService,
-    private envaseSrv: EnvasesService
+    private envaseSrv: EnvasesService,
+    private AuthSrv: AuthService
   ) {}
 
   valeForm = new FormGroup({
@@ -42,7 +43,8 @@ export class ReimprimirValeComponent {
         confirmButtonText: 'Ir a revisar',
       });
     } else {
-      this.valeSrv.anularVale(nroVale.value!).subscribe({
+      let usuario: string = this.AuthSrv.getDataUserOnLocalStorage()?.Usuario!
+      this.valeSrv.anularVale(nroVale.value!, usuario).subscribe({
         next: (res) => {
           Swal.fire({
             title: 'Vale reimpreso',

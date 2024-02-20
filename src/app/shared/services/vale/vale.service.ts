@@ -39,9 +39,10 @@ export class ValeService {
     });
   };
 
-  anularVale = (nroVale: string): Observable<any> => {
-    return this.http.patch(environment.apiUrl.concat('/vale/AnularVale'), {
+  anularVale = (nroVale: string, sucursal: string): Observable<boolean> => {
+    return this.http.post<boolean>(environment.apiUrl.concat('Vale/Anular'), {
       nroVale: nroVale,
+      username: sucursal
     });
   };
 

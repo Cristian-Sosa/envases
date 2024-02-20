@@ -9,7 +9,7 @@ import {
 import { InputComponent, ButtonComponent } from '../../../shared/components';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { EnvasesService, ValeService } from '../../../shared/services';
+import { AuthService, EnvasesService, ValeService } from '../../../shared/services';
 
 @Component({
   selector: 'app-anular-vale',
@@ -22,7 +22,8 @@ export class AnularValeComponent {
   constructor(
     private router: Router,
     private valeSrv: ValeService,
-    private envaseSrv: EnvasesService
+    private envaseSrv: EnvasesService,
+    private authSrv: AuthService
   ) {}
 
   valeForm = new FormGroup({
@@ -48,7 +49,8 @@ export class AnularValeComponent {
         confirmButtonText: 'Ir a revisar',
       });
     } else {
-      this.valeSrv.anularVale(nroVale.value!).subscribe({
+      let usuario: string = this.authSrv.getDataUserOnLocalStorage()?.Usuario!
+      this.valeSrv.anularVale(nroVale.value!, usuario).subscribe({
         next: (res) => {
           Swal.fire({
             title: 'Vale anulado',
