@@ -21,7 +21,23 @@ export interface EnvaseDTO {
 }
 
 export interface IVale {
-  NombreSucursal: string;
-  nroVale: string;
+  sucursal: string;
+  valeNro: string;
   items: Envase[];
+}
+
+export interface IAddValeResponse {
+  id: string;
+  idUsuario: number;
+  nombreUsuario: string;
+  idSucursal: number;
+  nroSucursal: number;
+  nombreSucursal: string;
+  tipoTkFiscal: null | string;
+  nroTkFiscal: null | string;
+  pvFiscal: null | string;
+  nroTransaccion: null | string;
+  idEstadoVale: number | boolean;
+  fechaHora: string;
+  ean: string;
 }

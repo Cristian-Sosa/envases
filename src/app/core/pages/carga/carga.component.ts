@@ -115,7 +115,7 @@ export class CargaComponent implements OnInit {
       .sendVale(this.datos.ticket)
       .subscribe({
         next: (res) => {
-          this.valeSrv.setEan(res.barcode.CodBarra1);
+          this.valeSrv.setEan(res.ean);
           Swal.fire({
             title: 'Vale registrado',
             text: 'El vale se guardó correctamente, no necesitarás subirlo luego.',
@@ -125,8 +125,8 @@ export class CargaComponent implements OnInit {
         },
         error: (res) => {
           let valeConError: IVale = {
-            nroVale: this.datos.ticket,
-            NombreSucursal: this.datos.usuario?.toUpperCase()!,
+            valeNro: this.datos.ticket,
+            sucursal: this.datos.usuario?.toUpperCase()!,
             items: this.carga,
           };
 

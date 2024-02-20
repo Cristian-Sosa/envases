@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 import { environment } from '../../../../environments/environment.development';
 
-import { IVale, IShortUser } from '../../models';
+import { IVale, IShortUser, IAddValeResponse } from '../../models';
 import { AuthService } from '../auth';
 import { EnvasesService } from '../envases';
 import Swal from 'sweetalert2';
@@ -20,21 +20,21 @@ export class ValeService {
   ) {}
 
   private vale: IVale = {
-    NombreSucursal: 'av',
-    nroVale: '',
+    sucursal: 'AV',
+    valeNro: '',
     items: [],
   };
 
   private ean: BehaviorSubject<string> = new BehaviorSubject('');
 
-  sendVale = (nroVale: string, step: boolean = false): Observable<any> => {
-    this.vale.nroVale = nroVale;
+  sendVale = (nroVale: string, step: boolean = false): Observable<IAddValeResponse> => {
+    this.vale.valeNro = nroVale;
 
     if (!step) {
       this.cargarVale();
     }
 
-    return this.http.post<any>(environment.apiUrl.concat('/vale/AddVale'), {
+    return this.http.post<IAddValeResponse>(environment.apiUrl.concat('Vale/Add'), {
       carga: this.vale,
     });
   };
@@ -61,7 +61,7 @@ export class ValeService {
         confirmButtonText: 'Entendido',
       });
     } else {
-      this.vale.NombreSucursal = usuario.Usuario;
+      this.vale.sucursal = usuario.Usuario;
     }
   };
 
@@ -105,13 +105,13 @@ export class ValeService {
 
         this.vale = vale;
 
-        this.sendVale(vale.nroVale, true)
+        this.sendVale(vale.valeNro, true)
           .subscribe({
             next: (res) => {
-              console.log(`El vale ${vale.nroVale} fue subido correctamente`);
+              console.log(`El vale ${vale.valeNro} fue subido correctamente`);
             },
             error: (err) => {
-              console.error(`El vale ${vale.nroVale} no pudo ser subido`);
+              console.error(`El vale ${vale.valeNro} no pudo ser subido`);
             },
           })
           .unsubscribe();
