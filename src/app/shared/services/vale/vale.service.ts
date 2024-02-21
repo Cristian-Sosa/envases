@@ -27,7 +27,7 @@ export class ValeService {
 
   private ean: BehaviorSubject<string> = new BehaviorSubject('');
 
-  sendVale = (nroVale: string): Observable<IAddValeResponse> => {
+  sendVale = (nroVale: string): Observable<IAddValeResponse | any> => {
     this.modelo.ValeNro = nroVale;
 
     this.cargarVale();
@@ -41,10 +41,7 @@ export class ValeService {
   };
 
   anularVale = (nroVale: string, sucursal: string): Observable<boolean> => {
-    return this.http.post<boolean>(environment.apiUrl.concat('Vale/Anular'), {
-      nroVale: nroVale,
-      username: sucursal,
-    });
+    return this.http.post<boolean>(environment.apiUrl.concat(`Vale/Anular?NroVale=${nroVale}&Username=${sucursal}`), null);
   };
 
   cargarVale = (): void => {

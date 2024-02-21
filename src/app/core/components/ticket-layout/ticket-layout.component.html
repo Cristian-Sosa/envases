@@ -18,8 +18,8 @@
       <p class="separador">DETALLE DEL VALE</p>
       <div class="card" *ngFor="let item of envases">
         <header class="card_header">
-          <p class="envase">{{ item.descripcion }}</p>
-          <p class="unidades">{{ "x".concat(item.cantidades) }}</p>
+          <p class="envase">{{ item.descripcion || item.Descripcion }}</p>
+          <p class="unidades">{{ "x".concat(item.cantidades || item.Cantidades) }}</p>
         </header>
       </div>
     </section>

@@ -22,7 +22,7 @@ export class EnvasesService {
 
   constructor(private dbSrv: DbService) {
     this.db = this.dbSrv.getDataBase();
-    this._cargaEnvases.next([])
+    this._cargaEnvases.next([]);
   }
 
   getAllTipoEnvases = async (): Promise<TipoEnvase[]> => {
@@ -41,7 +41,7 @@ export class EnvasesService {
     this.dbSrv.getOneEnvase(tipoEnvaseId);
 
   getCargaEnvases = (): Envase[] => {
-    return this.cargaEnvases
+    return this.cargaEnvases;
   };
 
   getCargaEnvasesObservable = (): Observable<Envase[]> => {
@@ -94,9 +94,11 @@ export class EnvasesService {
     for (let i = 0; i < this.cargaEnvases.length; i++) {
       const element = this.cargaEnvases[i];
       if (
-        element.Descripcion === envaseObj.descripcion &&
-        element.Id === envaseObj.id &&
-        element.Cantidades === envaseObj.cantidades
+        (element.Descripcion === envaseObj.Descripcion ||
+          element.Descripcion === envaseObj.descripcion) &&
+        (element.Id === envaseObj.Id || element.Id === envaseObj.id) &&
+        (element.Cantidades === envaseObj.Cantidades ||
+          element.Cantidades === envaseObj.cantidades)
       ) {
         index = i;
         break; // * Termina el bucle cuando se encuentra la coincidencia

@@ -98,7 +98,7 @@ export class CargaComponent implements OnInit {
 
     let formattedDate = currentDate.toLocaleString('es-ES', {
       year: 'numeric',
-      month: 'long',
+      month: 'short',
       day: 'numeric',
       hour: 'numeric',
       minute: 'numeric',
@@ -107,7 +107,7 @@ export class CargaComponent implements OnInit {
 
     this.datos = {
       fecha: formattedDate.toUpperCase(),
-      usuario: this.authSrv.getDataUserOnLocalStorage()?.Usuario,
+      usuario: this.authSrv.getDataUserOnLocalStorage()?.usuario,
       ticket: this.generarCodigoAleatorio(),
     };
 
@@ -115,7 +115,9 @@ export class CargaComponent implements OnInit {
       .sendVale(this.datos.ticket)
       .subscribe({
         next: (res) => {
-          this.valeSrv.setEan(res.EAN);
+          this.valeSrv.setEan(res.EAN || res.ean);
+
+
           Swal.fire({
             title: 'Vale registrado',
             text: 'El vale se guardó correctamente, no necesitarás subirlo luego.',
@@ -124,6 +126,158 @@ export class CargaComponent implements OnInit {
           });
         },
         error: (res) => {
+          const printWindow = window.open('', '_blank');
+  
+          printWindow!.document.write(`<html>
+      <head>
+        <title>Vale de envases - preview</title>
+        <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            color: #000;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+          }
+          
+          body {
+            width: 100%;
+            height: auto;
+          }
+          
+          .ticket_header {  
+            padding: 24px 0 8px;
+            
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+          }
+  
+          .ticket_header .logo {
+            width: 90%;
+            margin-bottom: 16px;
+            object-fit: container;
+          }
+  
+          .ticket_header .title, .ticket_header .sub-title {
+            margin-bottom: 4px;
+            font-size: 12px;
+            font-weight: 400;
+          }
+          
+          .cabecera {
+            padding-top: 20px;
+          
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: stretch;
+            gap: 4px;
+  
+            font-size: 10px;
+            font-weight: 400;
+          }
+          
+          .cuerpo {
+            padding: 20px 0;
+          
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: stretch;
+  
+            font-size: 10px;
+            font-weight: 400;
+          }
+          
+          .cuerpo .separador {
+            margin-bottom: 4px;
+            font-size: 10px;
+          }
+          
+          .card {        
+            width: 100%;
+            margin: 2px 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: strech;
+          }
+  
+          .card .card_header .envase, .card .card_header .unidades {        
+            font-size: 10px;
+          }
+  
+          .card_header {     
+            width: 100%;
+  
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+          }
+          
+          .footer {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+          }
+          
+          .firma-container {
+            width: 100%;
+            margin-top: 10px;
+  
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+          }
+          
+          .footer-firma {
+            width: 80%;
+          
+            margin: 42px auto 0;
+          
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+          
+            border-top: 1px solid #000;
+          }
+          
+          .footer-firma.caja {
+            width: 40%;
+          }
+          
+          .footer-firma p {
+            margin-top: 4px;
+            text-align: center;
+            font-size: 10px;
+            font-weight: 400;
+          }
+  
+          main svg {
+            width: 100%;
+            margin: 8px auto 16px;
+          }
+        </style>
+      </head>
+            <body>`);
+  
+          printWindow!.document.write(
+            document.querySelector('#ticketPrintComponent')?.innerHTML!
+          );
+  
+          printWindow!.document.write(`</body></html>`);
+  
+          printWindow!.document.close();
+          printWindow!.print();
+  
+          this.envaseSrv.resetVale();
+
           let valeConError: IVale = {
             ValeNro: this.datos.ticket,
             Sucursal: this.datos.usuario?.toUpperCase()!,
@@ -139,159 +293,160 @@ export class CargaComponent implements OnInit {
             confirmButtonText: 'Continuar',
           });
         },
-      })
-      .add(() => {
-        const printWindow = window.open('', '_blank');
-
-        printWindow!.document.write(`<html>
-    <head>
-      <title>Vale de envases - preview</title>
-      <style type="text/css">
-      * {
-          margin: 0;
-          padding: 0;
-          box-sizing: border-box;
-          color: #000;
-          font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-          width: 100%;
-          height: auto;
-        }
-        
-        .ticket_header {  
-          padding: 24px 0 8px;
+        complete: () => {
+          const printWindow = window.open('', '_blank');
+  
+          printWindow!.document.write(`<html>
+      <head>
+        <title>Vale de envases - preview</title>
+        <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            color: #000;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+          }
           
-          display: flex;
-          flex-direction: column;
-          justify-content: flex-start;
-          align-items: center;
+          body {
+            width: 100%;
+            height: auto;
+          }
+          
+          .ticket_header {  
+            padding: 24px 0 8px;
+            
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+          }
+  
+          .ticket_header .logo {
+            width: 90%;
+            margin-bottom: 16px;
+            object-fit: container;
+          }
+  
+          .ticket_header .title, .ticket_header .sub-title {
+            margin-bottom: 4px;
+            font-size: 12px;
+            font-weight: 400;
+          }
+          
+          .cabecera {
+            padding-top: 20px;
+          
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: stretch;
+            gap: 4px;
+  
+            font-size: 10px;
+            font-weight: 400;
+          }
+          
+          .cuerpo {
+            padding: 20px 0;
+          
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: stretch;
+  
+            font-size: 10px;
+            font-weight: 400;
+          }
+          
+          .cuerpo .separador {
+            margin-bottom: 4px;
+            font-size: 10px;
+          }
+          
+          .card {        
+            width: 100%;
+            margin: 2px 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: strech;
+          }
+  
+          .card .card_header .envase, .card .card_header .unidades {        
+            font-size: 10px;
+          }
+  
+          .card_header {     
+            width: 100%;
+  
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+          }
+          
+          .footer {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+          }
+          
+          .firma-container {
+            width: 100%;
+            margin-top: 10px;
+  
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+          }
+          
+          .footer-firma {
+            width: 80%;
+          
+            margin: 42px auto 0;
+          
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+          
+            border-top: 1px solid #000;
+          }
+          
+          .footer-firma.caja {
+            width: 40%;
+          }
+          
+          .footer-firma p {
+            margin-top: 4px;
+            text-align: center;
+            font-size: 10px;
+            font-weight: 400;
+          }
+  
+          main svg {
+            width: 100%;
+            margin: 8px auto 16px;
+          }
+        </style>
+      </head>
+            <body>`);
+  
+          printWindow!.document.write(
+            document.querySelector('#ticketPrintComponent')?.innerHTML!
+          );
+  
+          printWindow!.document.write(`</body></html>`);
+  
+          printWindow!.document.close();
+          printWindow!.print();
+  
+          this.envaseSrv.resetVale();
         }
-
-        .ticket_header .logo {
-          width: 90%;
-          margin-bottom: 16px;
-          object-fit: container;
-        }
-
-        .ticket_header .title, .ticket_header .sub-title {
-          margin-bottom: 4px;
-          font-size: 16px;
-          font-weight: 400;
-        }
-        
-        .cabecera {
-          padding-top: 20px;
-        
-          display: flex;
-          flex-direction: column;
-          justify-content: flex-start;
-          align-items: stretch;
-          gap: 4px;
-
-          font-size: 12px;
-          font-weight: 400;
-        }
-        
-        .cuerpo {
-          padding: 20px 0;
-        
-          display: flex;
-          flex-direction: column;
-          justify-content: flex-start;
-          align-items: stretch;
-
-          font-size: 12px;
-          font-weight: 400;
-        }
-        
-        .cuerpo .separador {
-          margin-bottom: 4px;
-          font-size: 14px;
-        }
-        
-        .card {        
-          width: 100%;
-          margin: 2px 0;
-          display: flex;
-          flex-direction: column;
-          justify-content: flex-start;
-          align-items: strech;
-        }
-
-        .card .card_header .envase, .card .card_header .unidades {        
-          font-size: 14px;
-        }
-
-        .card_header {     
-          width: 100%;
-
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-          align-items: center;
-        }
-        
-        .footer {
-          display: flex;
-          flex-direction: column;
-          justify-content: flex-start;
-          align-items: center;
-        }
-        
-        .firma-container {
-          width: 100%;
-          margin-top: 10px;
-
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-          align-items: center;
-        }
-        
-        .footer-firma {
-          width: 80%;
-        
-          margin: 42px auto 0;
-        
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        
-          border-top: 1px solid #000;
-        }
-        
-        .footer-firma.caja {
-          width: 40%;
-        }
-        
-        .footer-firma p {
-          margin-top: 4px;
-          text-align: center;
-          font-size: 12px;
-          font-weight: 400;
-        }
-
-        main svg {
-          margin: 8px auto 16px;
-        }
-      </style>
-    </head>
-          <body>`);
-
-        printWindow!.document.write(
-          document.querySelector('#ticketPrintComponent')?.innerHTML!
-        );
-
-        printWindow!.document.write(`</body></html>`);
-
-        printWindow!.document.close();
-        printWindow!.print();
-
-        this.envaseSrv.resetVale();
-      });
+      }).add(() => this.valeSrv.setEan(''))
   };
 
   newEnvase = (): void => {

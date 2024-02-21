@@ -70,7 +70,7 @@ export class AuthService {
 
   clearUserOnLocalStorage = (): void => localStorage.removeItem('usuario');
 
-  getDataUserOnLocalStorage = (): IShortUser | null => {
+  getDataUserOnLocalStorage = (): IShortUser | any => {
     if (!this.userData && localStorage.getItem('usuario'))
       this.userData = JSON.parse(localStorage.getItem('usuario')!);
 

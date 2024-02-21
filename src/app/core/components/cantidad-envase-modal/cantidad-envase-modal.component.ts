@@ -102,6 +102,13 @@ export class CantidadEnvaseModalComponent implements OnInit {
         icon: 'error',
         confirmButtonText: 'Entendido',
       });
+    } else if (parseInt(cantidad) <= 0) {
+      Swal.fire({
+        title: '¡No puedes hacer eso!',
+        text: 'Para avanzar necesitas agregar una cantidad válida. Debe ser entero y positivo.',
+        icon: 'error',
+        confirmButtonText: 'Entendido',
+      });
     } else {
       let obj: { envaseId: number; cantidad: number } = {
         envaseId: parseInt(envase!),

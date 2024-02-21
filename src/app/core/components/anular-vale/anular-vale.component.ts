@@ -49,7 +49,7 @@ export class AnularValeComponent {
         confirmButtonText: 'Ir a revisar',
       });
     } else {
-      let usuario: string = this.authSrv.getDataUserOnLocalStorage()?.Usuario!
+      let usuario: string = this.authSrv.getDataUserOnLocalStorage()?.usuario!
       this.valeSrv.anularVale(nroVale.value!, usuario).subscribe({
         next: (res) => {
           Swal.fire({
