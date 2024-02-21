@@ -1,43 +1,43 @@
 export interface TipoEnvase {
-  id: number;
-  nombre: 'cerveza' | 'gaseosa' | 'drago' | 'cajón';
-  habilitado: boolean;
+  Id: number;
+  Nombre: 'cerveza' | 'gaseosa' | 'drago' | 'cajón';
+  Habilitado: boolean;
 }
 
 export interface Envase {
-  id: number;
-  codigo: string;
-  descripcion: string;
-  ean: string;
-  precio?: number;
-  tipoEnvaseID: number;
-  cantidades?: number;
+  Id: number;
+  Codigo: string;
+  Descripcion: string;
+  EAN: string;
+  Precio?: string;
+  TipoEnvaseId: number;
+  Cantidades?: number;
 }
 
 export interface EnvaseDTO {
-  envaseId: number | null;
-  tipoEnvaseId: number | null;
-  cantidad: number | null;
+  EnvaseId: number | null;
+  TipoEnvaseId: number | null;
+  Cantidad: number | null;
 }
 
 export interface IVale {
-  sucursal: string;
-  valeNro: string;
-  items: Envase[];
+  Sucursal: string;
+  ValeNro: string;
+  Items: Envase[];
 }
 
 export interface IAddValeResponse {
-  id: string;
-  idUsuario: number;
-  nombreUsuario: string;
-  idSucursal: number;
-  nroSucursal: number;
-  nombreSucursal: string;
-  tipoTkFiscal: null | string;
-  nroTkFiscal: null | string;
-  pvFiscal: null | string;
-  nroTransaccion: null | string;
-  idEstadoVale: number | boolean;
-  fechaHora: string;
-  ean: string;
+  Id: string;
+  IdUsuario: number;
+  NombreUsuario: string;
+  IdSucursal: number;
+  NroSucursal: number;
+  NombreSucursal: string;
+  TipoTkFiscal: null | string;
+  NroTkFiscal: null | string;
+  PvFiscal: null | string;
+  NroTransaccion: null | string;
+  IdEstadoVale: number | boolean;
+  FechaHora: string;
+  EAN: string;
 }

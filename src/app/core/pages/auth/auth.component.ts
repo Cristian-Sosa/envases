@@ -67,7 +67,7 @@ export class AuthComponent implements OnInit {
 
   submitForm = () => {
     let usuario: IUserToVerify = {
-      Usuario: this.authForm.get('userControl')?.value!,
+      Username: this.authForm.get('userControl')?.value!,
       Password: this.authForm.get('passControl')?.value!,
     };
 

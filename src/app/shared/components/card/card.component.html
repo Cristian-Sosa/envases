@@ -2,20 +2,20 @@
   [ngClass]="{
     details: true,
     remove: remove,
-    verde: card.descripcion.includes('Verde'),
-    marron: card.descripcion.includes('Marrón'),
-    quilmes:card.descripcion.includes('Quilmes 340'),
-    drago:card.descripcion.includes('Garrafa'),
-    gaseosa:card.descripcion.includes('Coca Cola'),
-    cajon:card.descripcion.includes('Cajón') && (card.descripcion.includes('Cerveza') || card.descripcion.includes('Coca Cola') || card.descripcion.includes('Quilmes 340')),
+    verde: card.Descripcion.includes('Verde'),
+    marron: card.Descripcion.includes('Marrón'),
+    quilmes:card.Descripcion.includes('Quilmes 340'),
+    drago:card.Descripcion.includes('Garrafa'),
+    gaseosa:card.Descripcion.includes('Coca Cola'),
+    cajon:card.Descripcion.includes('Cajón') && (card.Descripcion.includes('Cerveza') || card.Descripcion.includes('Coca Cola') || card.Descripcion.includes('Quilmes 340')),
   }"
 >
-  <h4 class="title">{{ card.descripcion }}</h4>
+  <h4 class="title">{{ card.Descripcion }}</h4>
   <div class="subtitle">
     <span class="envase">{{
-      card.cantidades == 1
-        ? card.cantidades + " unidad"
-        : card.cantidades + " unidades"
+      card.Cantidades == 1
+        ? card.Cantidades + " unidad"
+        : card.Cantidades + " unidades"
     }}</span>
   </div>
   <figure (click)="removeEnvase()" class="cross">

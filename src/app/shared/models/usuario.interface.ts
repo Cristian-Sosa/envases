@@ -14,7 +14,7 @@ export interface IShortUser {
   Usuario: string;
 }
 export interface IUserToVerify {
-  Usuario: string;
+  Username: string;
   Password: string;
 }
 export interface IUserToCreate {

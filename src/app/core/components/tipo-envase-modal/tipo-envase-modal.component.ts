@@ -43,9 +43,9 @@ export class TipoEnvaseModalComponent implements OnInit {
       .then((promiseRes) => {
         promiseRes.map((envase) => {
           let envaseTemp: any = {
-            id: envase.id,
-            title: this.CapitailzeString(envase.nombre),
-            name: envase.nombre,
+            id: envase.Id,
+            title: this.CapitailzeString(envase.Nombre),
+            name: envase.Nombre,
           };
           this.tiposEnvase.push(envaseTemp);
         });

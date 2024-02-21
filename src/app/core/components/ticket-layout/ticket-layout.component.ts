@@ -47,7 +47,6 @@ export class TicketLayoutComponent implements OnInit, OnChanges {
     });
     this.valeSrv.getEAN().subscribe((ean) => {
       this.ean = ean;
-      console.log({ticketLayout: this.ean})
       this.generateEAN13Barcode()
     });
   }

@@ -45,13 +45,13 @@ export class CargaComponent implements OnInit {
   };
 
   public envaseDTO: {
-    envaseId: number | null;
-    tipoEnvaseId: number | null;
-    cantidad: number | null;
+    EnvaseId: number | null;
+    TipoEnvaseId: number | null;
+    Cantidad: number | null;
   } = {
-    envaseId: null,
-    tipoEnvaseId: null,
-    cantidad: null,
+    EnvaseId: null,
+    TipoEnvaseId: null,
+    Cantidad: null,
   };
 
   constructor(
@@ -115,7 +115,7 @@ export class CargaComponent implements OnInit {
       .sendVale(this.datos.ticket)
       .subscribe({
         next: (res) => {
-          this.valeSrv.setEan(res.ean);
+          this.valeSrv.setEan(res.EAN);
           Swal.fire({
             title: 'Vale registrado',
             text: 'El vale se guardó correctamente, no necesitarás subirlo luego.',
@@ -125,9 +125,9 @@ export class CargaComponent implements OnInit {
         },
         error: (res) => {
           let valeConError: IVale = {
-            valeNro: this.datos.ticket,
-            sucursal: this.datos.usuario?.toUpperCase()!,
-            items: this.carga,
+            ValeNro: this.datos.ticket,
+            Sucursal: this.datos.usuario?.toUpperCase()!,
+            Items: this.carga,
           };
 
           this.valeSrv.guardarVale(valeConError);
@@ -300,7 +300,7 @@ export class CargaComponent implements OnInit {
 
   tipoEnvaseSelected = (tipoEnvaseId: number): void => {
     if (tipoEnvaseId !== 0) {
-      this.envaseDTO.tipoEnvaseId = parseInt(tipoEnvaseId.toString()!);
+      this.envaseDTO.TipoEnvaseId = parseInt(tipoEnvaseId.toString()!);
       this.showModal = 'cantidadEnvases';
     } else {
       this.showModal = 'none';
@@ -311,8 +311,8 @@ export class CargaComponent implements OnInit {
     obj: { envaseId: number; cantidad: number } | 0
   ): void => {
     if (obj !== 0) {
-      this.envaseDTO.envaseId = obj.envaseId;
-      this.envaseDTO.cantidad = obj.cantidad;
+      this.envaseDTO.EnvaseId = obj.envaseId;
+      this.envaseDTO.Cantidad = obj.cantidad;
       this.envaseSrv.cargarEnvase(this.envaseDTO);
       this.showModal = 'none';
     } else {

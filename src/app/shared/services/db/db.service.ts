@@ -16,8 +16,8 @@ export class DbService {
         this.db.version(1).stores({
           usuarios:
             'Id, DNI, Nombre, Apellido, Usuario, Password, Habilitado, [Usuario+Password]',
-          tipo_envase: 'id, nombre, habilitado',
-          envase: 'id, codigo, descripcion, ean, precio, tipoEnvaseId',
+          tipo_envase: 'Id, Nombre, Habilitado',
+          envase: 'Id, Codigo, Descripcion, EAN, Precio, TipoEnvaseId',
         });
 
         this.db.table('usuarios').bulkAdd(usuarios);
@@ -46,7 +46,7 @@ export class DbService {
     return await this.db
       .table('usuarios')
       .where({
-        Usuario: userToSearch.Usuario,
+        Usuario: userToSearch.Username,
         Password: userToSearch.Password,
       })
       .first();
@@ -56,23 +56,8 @@ export class DbService {
     return await this.db
       .table('envase')
       .where({
-        tipoEnvaseId: tipoEnvaseId,
+        TipoEnvaseId: tipoEnvaseId,
       })
       .toArray();
-  };
-
-  getCargaEnvases = async (): Promise<Envase[]> => {
-    let envases: Envase[] = [];
-    await this.db
-      .table('envase')
-      .toArray()
-      .then((envasesResponse) => {
-        envases = envasesResponse;
-      })
-      .catch(() => {
-        throw new Error('Error al obtener envases de IndexDB');
-      });
-
-    return envases;
   };
 }

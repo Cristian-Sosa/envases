@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 import { environment } from '../../../../environments/environment.development';
 
-import { IVale, IShortUser, IAddValeResponse } from '../../models';
+import { IVale, IShortUser, IAddValeResponse, Envase } from '../../models';
 import { AuthService } from '../auth';
 import { EnvasesService } from '../envases';
 import Swal from 'sweetalert2';
@@ -19,30 +19,31 @@ export class ValeService {
     private http: HttpClient
   ) {}
 
-  private vale: IVale = {
-    sucursal: 'AV',
-    valeNro: '',
-    items: [],
+  private modelo: IVale = {
+    Sucursal: 'AV',
+    ValeNro: '',
+    Items: [],
   };
 
   private ean: BehaviorSubject<string> = new BehaviorSubject('');
 
-  sendVale = (nroVale: string, step: boolean = false): Observable<IAddValeResponse> => {
-    this.vale.valeNro = nroVale;
+  sendVale = (nroVale: string): Observable<IAddValeResponse> => {
+    this.modelo.ValeNro = nroVale;
 
-    if (!step) {
-      this.cargarVale();
-    }
+    this.cargarVale();
 
-    return this.http.post<IAddValeResponse>(environment.apiUrl.concat('Vale/Add'), {
-      carga: this.vale,
-    });
+    console.log({ vale: this.modelo });
+
+    return this.http.post<IAddValeResponse>(
+      environment.apiUrl.concat('Vale/Add'),
+      this.modelo
+    );
   };
 
   anularVale = (nroVale: string, sucursal: string): Observable<boolean> => {
     return this.http.post<boolean>(environment.apiUrl.concat('Vale/Anular'), {
       nroVale: nroVale,
-      username: sucursal
+      username: sucursal,
     });
   };
 
@@ -52,7 +53,7 @@ export class ValeService {
   };
 
   obtenerUsuario = (): void => {
-    const usuario: IShortUser | null = this.authSrv.getDataUserOnLocalStorage();
+    const usuario: any = this.authSrv.getDataUserOnLocalStorage();
 
     if (!usuario) {
       Swal.fire({
@@ -62,23 +63,12 @@ export class ValeService {
         confirmButtonText: 'Entendido',
       });
     } else {
-      this.vale.sucursal = usuario.Usuario;
+      this.modelo.Sucursal = usuario.usuario;
     }
   };
 
   obtenerItemsVale = (): void => {
-    this.envaseSrv.getCargaEnvases().then((envases) => {
-      if (!envases) {
-        Swal.fire({
-          title: '¡Vaya! Algo salió mal',
-          text: 'No pudimos recuperar la carga que estabas subiendo',
-          icon: 'error',
-          confirmButtonText: 'Entendido',
-        });
-      } else {
-        this.vale.items = envases;
-      }
-    });
+    this.modelo.Items = this.envaseSrv.getCargaEnvases();
   };
 
   guardarVale = (vale: IVale): void => {
@@ -98,31 +88,31 @@ export class ValeService {
   revisarVales = async () => {
     let cargasString: string | null = localStorage.getItem('vales_pendientes');
 
-    if (cargasString) {
-      let valesPendientes: IVale[] = JSON.parse(cargasString);
+    // if (cargasString) {
+    //   let valesPendientes: IVale[] = JSON.parse(cargasString);
 
-      for (let i = 0; i < valesPendientes.length; i++) {
-        const vale: IVale = valesPendientes[i];
+    //   for (let i = 0; i < valesPendientes.length; i++) {
+    //     const vale: IVale = valesPendientes[i];
 
-        this.vale = vale;
+    //     this.vale = vale;
 
-        this.sendVale(vale.valeNro, true)
-          .subscribe({
-            next: (res) => {
-              console.log(`El vale ${vale.valeNro} fue subido correctamente`);
-            },
-            error: (err) => {
-              console.error(`El vale ${vale.valeNro} no pudo ser subido`);
-            },
-          })
-          .unsubscribe();
-      }
-    }
+    //     this.sendVale(vale.ValeNro)
+    //       .subscribe({
+    //         next: (res) => {
+    //           console.log(`El vale ${vale.ValeNro} fue subido correctamente`);
+    //         },
+    //         error: (err) => {
+    //           console.error(`El vale ${vale.ValeNro} no pudo ser subido`);
+    //         },
+    //       })
+    //       .unsubscribe();
+    //   }
+    // }
   };
 
   setEan = (newEan: string): void => {
     this.ean.next(newEan);
-    console.log(newEan);
+    console.log({ EAN: newEan });
   };
 
   getEAN = (): Observable<string> => {

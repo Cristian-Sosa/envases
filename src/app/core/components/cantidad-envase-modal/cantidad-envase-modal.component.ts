@@ -56,10 +56,10 @@ export class CantidadEnvaseModalComponent implements OnInit {
       .getAllEnvases()
       .then((envasesArr) => {
         envasesArr.map((envase) => {
-          if (envase.tipoEnvaseID === this.tipoEnvaseId) {
+          if (envase.TipoEnvaseId === this.tipoEnvaseId) {
             let envaseTemp: { value: number; description: string } = {
-              value: envase.id,
-              description: this.capitalizarTexto(envase.descripcion),
+              value: envase.Id,
+              description: this.capitalizarTexto(envase.Descripcion),
             };
 
             this.envases.push(envaseTemp);

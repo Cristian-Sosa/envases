@@ -16,6 +16,8 @@ export class EnvasesService {
     this.cargaEnvases
   );
 
+  private envases: Envase[] = [];
+
   private db: Dexie;
 
   constructor(private dbSrv: DbService) {
@@ -38,8 +40,8 @@ export class EnvasesService {
   getFilteredEnvases = async (tipoEnvaseId: string): Promise<Envase[]> =>
     this.dbSrv.getOneEnvase(tipoEnvaseId);
 
-  getCargaEnvases = async (): Promise<Envase[]> => {
-    return this.dbSrv.getCargaEnvases();
+  getCargaEnvases = (): Envase[] => {
+    return this.cargaEnvases
   };
 
   getCargaEnvasesObservable = (): Observable<Envase[]> => {
@@ -67,11 +69,11 @@ export class EnvasesService {
       let envases = await this.getAllEnvases();
 
       envaseFiltrado = envases.find(
-        (envase) => envase.id === envaseDTO.envaseId!
+        (envase) => envase.Id === envaseDTO.EnvaseId!
       );
 
       if (envaseFiltrado) {
-        envaseFiltrado.cantidades = envaseDTO.cantidad!;
+        envaseFiltrado.Cantidades = envaseDTO.Cantidad!;
         this.addEnvase(envaseFiltrado);
       } else {
         Swal.fire({
@@ -92,9 +94,9 @@ export class EnvasesService {
     for (let i = 0; i < this.cargaEnvases.length; i++) {
       const element = this.cargaEnvases[i];
       if (
-        element.descripcion === envaseObj.descripcion &&
-        element.id === envaseObj.id &&
-        element.cantidades === envaseObj.cantidades
+        element.Descripcion === envaseObj.descripcion &&
+        element.Id === envaseObj.id &&
+        element.Cantidades === envaseObj.cantidades
       ) {
         index = i;
         break; // * Termina el bucle cuando se encuentra la coincidencia
