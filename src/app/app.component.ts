@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { ToolbarComponent } from './core/components';
@@ -8,7 +8,7 @@ import {
   DbService,
   EnvasesService,
   ValeService,
-  WebConectionService,
+  WebConnectionService,
 } from './shared/services';
 
 @Component({
@@ -20,7 +20,7 @@ import {
     EnvasesService,
     ValeService,
     DbService,
-    WebConectionService,
+    WebConnectionService,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.sass',

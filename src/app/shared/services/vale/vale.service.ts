@@ -32,11 +32,16 @@ export class ValeService {
 
     this.cargarVale();
 
-    console.log({ vale: this.modelo });
-
     return this.http.post<IAddValeResponse>(
       environment.apiUrl.concat('Vale/Add'),
       this.modelo
+    );
+  };
+
+  bulkAddVales = (vales: IVale[]): Observable<IVale[] | any> => {
+    return this.http.post<IVale[]>(
+      environment.apiUrl.concat('Vale/BulkAdd'),
+      vales
     );
   };
 
@@ -69,6 +74,7 @@ export class ValeService {
   };
 
   guardarVale = (vale: IVale): void => {
+    this.cargarVale();
     let isValesPendientes: string | null =
       localStorage.getItem('vales_pendientes');
 
@@ -85,26 +91,31 @@ export class ValeService {
   revisarVales = async () => {
     let cargasString: string | null = localStorage.getItem('vales_pendientes');
 
-    // if (cargasString) {
-    //   let valesPendientes: IVale[] = JSON.parse(cargasString);
+    if (cargasString) {
+      let valesPendientes: IVale[] = JSON.parse(cargasString);
 
-    //   for (let i = 0; i < valesPendientes.length; i++) {
-    //     const vale: IVale = valesPendientes[i];
+      this.bulkAddVales(valesPendientes).subscribe({
+        next: (res) => {
+          Swal.fire({
+            title: 'Vales cargados',
+            text: 'Se cargaron todos los vales pendientes.',
+            icon: 'success',
+            confirmButtonText: 'Entendido',
+          });
 
-    //     this.vale = vale;
+          localStorage.removeItem('vales_pendientes')
+        },
+        error: (err) => {
+          Swal.fire({
+            title: 'Hubo un error',
+            text: 'Algo sucedió durante la carga de los vales, revisa la conexión a internet',
+            icon: 'error',
+            confirmButtonText: 'Entendido',
+          });
+        }
+      })
 
-    //     this.sendVale(vale.ValeNro)
-    //       .subscribe({
-    //         next: (res) => {
-    //           console.log(`El vale ${vale.ValeNro} fue subido correctamente`);
-    //         },
-    //         error: (err) => {
-    //           console.error(`El vale ${vale.ValeNro} no pudo ser subido`);
-    //         },
-    //       })
-    //       .unsubscribe();
-    //   }
-    // }
+    }
   };
 
   setEan = (newEan: string): void => {

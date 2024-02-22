@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { DateTime } from 'luxon';
 
-import { EnvasesService, ValeService } from '../../../shared/services';
+import {
+  EnvasesService,
+  ValeService,
+  WebConnectionService,
+} from '../../../shared/services';
 import { ButtonComponent, Envase, IVale } from '../../../shared';
 import {
   AnularValeComponent,
@@ -57,7 +61,8 @@ export class CargaComponent implements OnInit {
   constructor(
     private authSrv: AuthService,
     private envaseSrv: EnvasesService,
-    private valeSrv: ValeService
+    private valeSrv: ValeService,
+    private webConectionSrv: WebConnectionService
   ) {
     let currentDate = new Date();
 
@@ -86,6 +91,8 @@ export class CargaComponent implements OnInit {
         this.isCargaActual = false;
       },
     });
+
+    this.webConectionSrv.isOnline();
   }
 
   generarCodigoAleatorio = (): string => {
@@ -117,7 +124,6 @@ export class CargaComponent implements OnInit {
         next: (res) => {
           this.valeSrv.setEan(res.EAN || res.ean);
 
-
           Swal.fire({
             title: 'Vale registrado',
             text: 'El vale se guardó correctamente, no necesitarás subirlo luego.',
@@ -127,7 +133,7 @@ export class CargaComponent implements OnInit {
         },
         error: (res) => {
           const printWindow = window.open('', '_blank');
-  
+
           printWindow!.document.write(`<html>
       <head>
         <title>Vale de envases - preview</title>
@@ -266,16 +272,16 @@ export class CargaComponent implements OnInit {
         </style>
       </head>
             <body>`);
-  
+
           printWindow!.document.write(
             document.querySelector('#ticketPrintComponent')?.innerHTML!
           );
-  
+
           printWindow!.document.write(`</body></html>`);
-  
+
           printWindow!.document.close();
           printWindow!.print();
-  
+
           this.envaseSrv.resetVale();
 
           let valeConError: IVale = {
@@ -295,7 +301,7 @@ export class CargaComponent implements OnInit {
         },
         complete: () => {
           const printWindow = window.open('', '_blank');
-  
+
           printWindow!.document.write(`<html>
       <head>
         <title>Vale de envases - preview</title>
@@ -434,19 +440,20 @@ export class CargaComponent implements OnInit {
         </style>
       </head>
             <body>`);
-  
+
           printWindow!.document.write(
             document.querySelector('#ticketPrintComponent')?.innerHTML!
           );
-  
+
           printWindow!.document.write(`</body></html>`);
-  
+
           printWindow!.document.close();
           printWindow!.print();
-  
+
           this.envaseSrv.resetVale();
-        }
-      }).add(() => this.valeSrv.setEan(''))
+        },
+      })
+      .add(() => this.valeSrv.setEan(''));
   };
 
   newEnvase = (): void => {

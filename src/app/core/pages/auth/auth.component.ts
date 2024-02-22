@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Pipe } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -17,11 +17,10 @@ import {
 import Swal from 'sweetalert2';
 import {
   AuthService,
-  DbService,
-  WebConectionService,
+  WebConnectionService,
 } from '../../../shared/services';
 import { HttpClientModule } from '@angular/common/http';
-import { take } from 'rxjs';
+import { Observable, map, pipe, take } from 'rxjs';
 
 @Component({
   selector: 'app-auth',
@@ -36,9 +35,7 @@ import { take } from 'rxjs';
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.sass',
 })
-export class AuthComponent implements OnInit {
-  private connectionStatus!: string;
-
+export class AuthComponent {
   authForm = new FormGroup({
     userControl: new FormControl('', [
       Validators.required,
@@ -49,21 +46,12 @@ export class AuthComponent implements OnInit {
       Validators.nullValidator,
     ]),
   });
+  valeSrv: any;
 
   constructor(
     private router: Router,
     private authSrv: AuthService,
-    private webConectionSrv: WebConectionService,
-    private dbSrv: DbService
   ) {}
-
-  ngOnInit(): void {
-    this.connectionStatus = this.webConectionSrv.getConnectionStatus();
-
-    this.webConectionSrv.getConnectionStatus$().subscribe((status: string) => {
-      this.connectionStatus = status;
-    });
-  }
 
   submitForm = () => {
     let usuario: IUserToVerify = {
@@ -92,40 +80,35 @@ export class AuthComponent implements OnInit {
               });
             }
           });
-          // if (err.status !== 504) {
-          //   Swal.fire({
-          //     title: 'Usuario no registrado',
-          //     text: 'Puede que hayas cometido un error o tu usuario se encuentre suspendido.',
-          //     icon: 'error',
-          //     confirmButtonText: 'Reintentar',
-          //   }).then(() => {
-          //     this.authForm.reset();
-          //   });
-          // } else {
-          //   this.authSrv
-          //     .validateUserOnIndexDB(usuario)
-          //     .then((isUser) => {
-          //       if (isUser) {
-          //         this.router.navigate(['carga']);
-          //       } else {
-          //         Swal.fire({
-          //           title: 'Usuario no registrado',
-          //           text: 'Puede que hayas cometido un error o tu usuario se encuentre suspendido.',
-          //           icon: 'error',
-          //           confirmButtonText: 'Reintentar',
-          //         });
-          //       }
-          //     })
-          //     .catch((err) =>
-          //       Swal.fire({
-          //         title: err.message,
-          //         text: 'Puede que hayas cometido un error o tu usuario se encuentre suspendido.',
-          //         icon: 'error',
-          //         confirmButtonText: 'Reintentar',
-          //       })
-          //     );
-          // }
         },
       });
   };
 }
+function fromEvent(window: Window & typeof globalThis, arg1: string) {
+  throw new Error('Function not implemented.');
+}
+
+function debounceTime(arg0: number): any {
+  throw new Error('Function not implemented.');
+}
+
+function distinctUntilChanged(): any {
+  throw new Error('Function not implemented.');
+}
+
+function merge(online$: any, offline$: any) {
+  throw new Error('Function not implemented.');
+}
+
+function share(): any {
+  throw new Error('Function not implemented.');
+}
+
+function catchError(arg0: (error: any) => any): any {
+  throw new Error('Function not implemented.');
+}
+
+function of(connectionStatus: string) {
+  throw new Error('Function not implemented.');
+}
+
