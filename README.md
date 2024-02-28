@@ -42,7 +42,9 @@
 
 Dino Envases es una aplicación web, la cual trabaja en conjunto con una aplicación que funciona de intermediaria para impresiones de tickets por bluetooth.
 
-Permite a los guardias del puesto 1(uno) `recepcionar envases de: Dragos, Cervezas, Gaseosas y sus cajones`; Para luego `imprimir un ticket` que debe ser entregado al cliente como vale, el mismo cuenta con un `EAN13 que puede ser utilizado en linea de caja`. 
+Permite a los guardias del puesto 1(uno) `recepcionar envases de: Dragos, Cervezas, Gaseosas y sus cajones`; Para luego `imprimir un ticket` que debe ser entregado al cliente como vale, el mismo cuenta con un `EAN13 que puede ser utilizado en linea de caja`.
+
+El proyecto en si tiene prerrequisitos que cumplir, la aplicación funciona con un controlador que necesita ser instalado en el dispositivo mobil para conectar vía Bluetooth con la impresora de tickets, lo puedes encontrar en la carpeta `/docs`.
 
 
 <br>
@@ -80,6 +82,9 @@ Permite a los guardias del puesto 1(uno) `recepcionar envases de: Dragos, Cervez
 | rxjs                          | 7.8.1       |
 | typescript                    | 5.2.2       |
 | zone.js                       | 0.14.2      |
+| dexie                         | 3.2.4       |
+| jsbarcode                     | 3.11.6      |
+| luxon                         | 3.4.4       |
 
 </article>
   
@@ -133,7 +138,7 @@ En la carpeta `shared/services` se van a encontrar servicios con responsabilidad
   <br />
   <br />
 
-Cómandos para desarrollo local
+Cómandos para desarrollo
 
   <pre>
   <code>
