@@ -1,6 +1,6 @@
 <header align="center">
   
-  <h1 align="center">Dino Empleo - Dinosaurio RRHH</h1>
+  <h1 align="center">Dino Envases - Super MAMI</h1>
   
   <p align="center">Portal de empleo oficial de Grupo Dinosaurio</p>
  
