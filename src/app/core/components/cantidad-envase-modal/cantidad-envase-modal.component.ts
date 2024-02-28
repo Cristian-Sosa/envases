@@ -95,17 +95,10 @@ export class CantidadEnvaseModalComponent implements OnInit {
     let cantidad: string | null =
       this.tipoEnvaseForm.controls['cantidadControl'].value;
 
-    if (!cantidad) {
+    if (!cantidad || !/^\d+$/.test(cantidad)) {
       Swal.fire({
         title: '¡No puedes hacer eso!',
-        text: 'Para avanzar necesitas agregar una cantidad válida. Debe ser entero y positivo.',
-        icon: 'error',
-        confirmButtonText: 'Entendido',
-      });
-    } else if (parseInt(cantidad) <= 0) {
-      Swal.fire({
-        title: '¡No puedes hacer eso!',
-        text: 'Para avanzar necesitas agregar una cantidad válida. Debe ser entero y positivo.',
+        text: 'Para avanzar necesitas agregar una cantidad válida. Debe ser entero y positivo.2222',
         icon: 'error',
         confirmButtonText: 'Entendido',
       });
