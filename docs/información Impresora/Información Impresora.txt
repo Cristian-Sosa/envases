@@ -1,3 +1,2 @@
-Impresora Comandera Termica Ticket 58mm Eliprinter Sol-58
-conexion Bluetooth
+Impresora Comandera Termica Ticket 58mm Eliprinter Sol-58 con conexion Bluetooth
 
